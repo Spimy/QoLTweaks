@@ -4,7 +4,7 @@ import dev.spimy.qoltweaks.QoLTweaks;
 
 public class CommandLoader {
 
-    private QoLTweaks plugin;
+    private final QoLTweaks plugin;
 
     public CommandLoader(QoLTweaks plugin) {
         this.plugin = plugin;
