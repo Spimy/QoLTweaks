@@ -2,7 +2,8 @@ package dev.spimy.qoltweaks;
 
 public enum Permissions {
     LADDERWARP("ladderwarp"),
-    BOOKEXTRACT("bookextract");
+    BOOK_EXTRACT("bookextract"),
+    NAMETAG_SHEAR("nametagshear");
 
     private final String permissionNode;
 
