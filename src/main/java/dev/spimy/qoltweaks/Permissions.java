@@ -1,16 +1,13 @@
 package dev.spimy.qoltweaks;
 
 public enum Permissions {
-    LADDERWARP("ladderwarp");
+    LADDERWARP("ladderwarp"),
+    BOOKEXTRACT("bookextract");
 
     private final String permissionNode;
 
-    private Permissions(String permissionNode) {
+    Permissions(String permissionNode) {
         this.permissionNode = String.format("qoltweaks.%s", permissionNode);
-    }
-
-    public boolean equalsName(String permissionNode) {
-        return this.permissionNode.equals(permissionNode);
     }
 
     public String getPermissionNode() {
