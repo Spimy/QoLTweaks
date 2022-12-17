@@ -12,3 +12,7 @@ modules:
     book-extract:
       enabled: true
       require-permission: false
+  entities:
+    nametag-shear:
+      enabled: true
+      require-permission: false
