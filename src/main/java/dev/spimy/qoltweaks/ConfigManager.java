@@ -11,11 +11,8 @@ public class ConfigManager {
     }
 
     public ConfigurationSection getModuleConfig(Modules module) {
-        plugin.getServer().getConsoleSender().sendMessage(
-                plugin.formatMessage("&6" + String.format("modules.%s", module.name()))
-        );
         return plugin.getConfig().getConfigurationSection(
-            String.format("modules.%s", module.name())
+            String.format("modules.%s", module.name().toLowerCase())
         );
     }
 
