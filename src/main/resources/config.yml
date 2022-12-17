@@ -8,3 +8,7 @@ modules:
     ladder-warp:
       enabled: true
       require-permission: false
+  enchanting:
+    book-extract:
+      enabled: true
+      require-permission: false
