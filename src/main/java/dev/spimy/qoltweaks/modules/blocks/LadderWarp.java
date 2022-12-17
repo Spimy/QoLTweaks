@@ -18,7 +18,7 @@ import org.bukkit.util.Vector;
 
 public class LadderWarp implements Listener {
 
-    private QoLTweaks plugin;
+    private final QoLTweaks plugin;
 
     public LadderWarp(QoLTweaks plugin) {
         this.plugin = plugin;
@@ -31,16 +31,15 @@ public class LadderWarp implements Listener {
 
         Player player = event.getPlayer();
 
-        if (config.getBoolean(("ladder-warp.require-permission"))) {
-            player.sendMessage(Permissions.LADDERWARP.name());
-            if (!player.hasPermission(Permissions.LADDERWARP.name())) return;
-        }
-
         if (event.getItem() != null) return;
         if (!event.getPlayer().isSneaking()) return;
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if (event.getHand() != EquipmentSlot.HAND) return;
-        if (event.getClickedBlock().getType() != Material.LADDER) return;
+        if (event.getClickedBlock() != null && event.getClickedBlock().getType() != Material.LADDER) return;
+
+        if (config.getBoolean(("ladder-warp.require-permission"))) {
+            if (!player.hasPermission(Permissions.LADDERWARP.getPermissionNode())) return;
+        }
 
         Block ladder = event.getClickedBlock();
         Vector face = player.getEyeLocation().getDirection().clone();
