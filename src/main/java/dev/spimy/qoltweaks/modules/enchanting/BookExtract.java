@@ -36,7 +36,7 @@ public class BookExtract implements Listener {
         Player player = (Player) event.getWhoClicked();
 
         if (config.getBoolean(("book-extract.require-permission"))) {
-            if (!player.hasPermission(Permissions.BOOKEXTRACT.getPermissionNode())) return;
+            if (!player.hasPermission(Permissions.BOOK_EXTRACT.getPermissionNode())) return;
         }
 
         if (cursor == null) return;
