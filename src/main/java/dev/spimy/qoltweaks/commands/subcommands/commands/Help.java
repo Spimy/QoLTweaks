@@ -20,12 +20,12 @@ public class Help implements SubCommand {
     public boolean execute(CommandSender sender, String[] args) {
         if (args.length == 0) {
             sender.sendMessage(
-                plugin.formatMessage(
-                    String.format(
-                        "&7-= &6QoLTweaks &7=-\n%s",
-                        String.join("\n", handler.getCommandList())
+                    plugin.formatMessage(
+                            String.format(
+                                    "&7-= &6QoLTweaks &7=-\n%s",
+                                    String.join("\n", handler.getCommandList())
+                            )
                     )
-                )
             );
             return true;
         }
@@ -36,25 +36,34 @@ public class Help implements SubCommand {
 
         if (subCommand == null) {
             sender.sendMessage(
-                plugin.formatMessage(
-                    String.format(
-                        "%s %s",
-                        config.getString("prefix"),
-                        config.getString("not-exist")
+                    plugin.formatMessage(
+                            String.format(
+                                    "%s %s",
+                                    config.getString("prefix"),
+                                    config.getString("not-exist")
+                            )
                     )
-                )
             );
             return true;
         }
 
-        sender.sendMessage(plugin.formatMessage(String.format(
-            "&6/%s %s: &a%s %s\n%s",
-            plugin.getClass().getSimpleName().toLowerCase(),
-            command,
-            subCommand.getDescription(),
-            subCommand.getArgumentsList(),
-            subCommand.getDetailedDescription()
-        )));
+        sender.sendMessage(
+                plugin.formatMessage(
+                        String.join("\n", new String[]
+                                {
+                                        String.format("&7-= &6View further details for '%s' &7=-", command),
+                                        String.format(
+                                                "&6/%s %s %s: &a%s\n%s",
+                                                plugin.getClass().getSimpleName().toLowerCase(),
+                                                command,
+                                                subCommand.getArgumentsList(),
+                                                subCommand.getDescription(),
+                                                subCommand.getDetailedDescription()
+                                        )
+                                }
+                        )
+                )
+        );
         return true;
     }
 
@@ -71,7 +80,7 @@ public class Help implements SubCommand {
     @Override
     public String getDetailedDescription() {
         return String.join("\n", new String[]
-            {"&6[command]: &acommand for which more details to show."}
+                {"&6[command]: &acommand for which more details to show."}
         );
     }
 

@@ -29,11 +29,11 @@ public class SubCommandHandler {
 
         for (Map.Entry<String, SubCommand> entry : subCommands.entrySet()) {
             commandList.add(String.format(
-                    "&6/%s %s: &a%s %s",
+                    "&6/%s %s %s: &a%s",
                     plugin.getClass().getSimpleName().toLowerCase(),
                     entry.getKey(),
-                    entry.getValue().getDescription(),
-                    entry.getValue().getArgumentsList()
+                    entry.getValue().getArgumentsList(),
+                    entry.getValue().getDescription()
             ));
         }
 
