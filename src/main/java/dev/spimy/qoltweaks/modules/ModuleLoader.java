@@ -3,6 +3,7 @@ package dev.spimy.qoltweaks.modules;
 import dev.spimy.qoltweaks.QoLTweaks;
 import dev.spimy.qoltweaks.modules.blocks.LadderWarp;
 import dev.spimy.qoltweaks.modules.enchanting.BookExtract;
+import dev.spimy.qoltweaks.modules.entities.NametagShear;
 import org.bukkit.event.Listener;
 
 public class ModuleLoader {
@@ -21,6 +22,7 @@ public class ModuleLoader {
     private void loadModules() {
         this.registerEvent(new LadderWarp(plugin));
         this.registerEvent(new BookExtract(plugin));
+        this.registerEvent(new NametagShear(plugin));
     }
 
 }
