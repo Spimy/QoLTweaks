@@ -1,0 +1,10 @@
+lang:
+  prefix: "&6QoLTweals &7»"
+  not-exist: "&cThis command does not exist."
+  reloaded: "&aConfig has been reloaded."
+
+modules:
+  blocks:
+    ladder-warp:
+      enabled: true
+      require-permission: false
