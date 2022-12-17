@@ -20,7 +20,7 @@ public class BaseCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, @NotNull String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         SubCommandHandler handler = new SubCommandHandler(plugin);
 
         if (args.length == 0) {
