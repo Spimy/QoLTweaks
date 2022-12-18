@@ -3,6 +3,7 @@ package dev.spimy.qoltweaks;
 import dev.spimy.qoltweaks.commands.CommandLoader;
 import dev.spimy.qoltweaks.modules.ModuleLoader;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class QoLTweaks extends JavaPlugin {
@@ -19,19 +20,23 @@ public final class QoLTweaks extends JavaPlugin {
         new ModuleLoader(this);
 
         getServer().getConsoleSender().sendMessage(
-            formatMessage("&aQoLTweaks enabled.")
+                formatMessage("&aQoLTweaks enabled.")
         );
     }
 
     @Override
     public void onDisable() {
         getServer().getConsoleSender().sendMessage(
-            formatMessage("&cQoLTweaks disabled.")
+                formatMessage("&cQoLTweaks disabled.")
         );
     }
 
     public String formatMessage(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
+    }
+
+    public NamespacedKey getKey(String key) {
+        return new NamespacedKey(this, key);
     }
 
 }
