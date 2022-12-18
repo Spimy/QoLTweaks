@@ -25,3 +25,6 @@ modules:
         dog: 5
         cat: 5
       heal: true
+    prevent-pet-damage:
+      enabled: true
+      require-permission: false

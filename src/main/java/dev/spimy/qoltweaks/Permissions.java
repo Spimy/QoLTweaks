@@ -5,7 +5,8 @@ public enum Permissions {
     BOOK_EXTRACT("bookextract"),
     NAMETAG_SHEAR("nametagshear"),
     PET_DOG("petdog"),
-    PET_CAT("petcat");
+    PET_CAT("petcat"),
+    PREVENT_PET_DAMAGE("preventpetdamage");
 
     private final String permissionNode;
 
