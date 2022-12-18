@@ -6,7 +6,8 @@ public enum Permissions {
     NAMETAG_SHEAR("nametagshear"),
     PET_DOG("petdog"),
     PET_CAT("petcat"),
-    PREVENT_PET_DAMAGE("preventpetdamage");
+    PREVENT_PET_DAMAGE("preventpetdamage"),
+    HOE_HARVEST("hoeharvest");
 
     private final String permissionNode;
 

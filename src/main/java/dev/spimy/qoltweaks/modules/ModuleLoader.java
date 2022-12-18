@@ -6,6 +6,7 @@ import dev.spimy.qoltweaks.modules.enchanting.BookExtract;
 import dev.spimy.qoltweaks.modules.entities.NametagShear;
 import dev.spimy.qoltweaks.modules.entities.PreventPetDamage;
 import dev.spimy.qoltweaks.modules.entities.petting.Petting;
+import dev.spimy.qoltweaks.modules.farming.HoeHarvest;
 import org.bukkit.event.Listener;
 
 public class ModuleLoader {
@@ -27,6 +28,7 @@ public class ModuleLoader {
         this.registerEvent(new NametagShear(plugin));
         this.registerEvent(new Petting(plugin));
         this.registerEvent(new PreventPetDamage(plugin));
+        this.registerEvent(new HoeHarvest(plugin));
     }
 
 }

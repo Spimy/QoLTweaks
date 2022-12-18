@@ -28,3 +28,26 @@ modules:
     prevent-pet-damage:
       enabled: true
       require-permission: false
+  farming:
+    hoe-harvest:
+      enabled: true
+      require-permissions: false
+      # range at which area will be cleared.
+      # e.g, if range is set to 1, a 3x3 area will be cleared
+      # if set to 2, a 5x5 area will be cleared
+      range:
+        wooden: 1
+        stone: 1
+        iron: 2
+        diamond: 2
+        netherite: 2
+      # list of materials that can be harvested within range
+      # you can use tags too to consider a group of similar materials like FLOWERS and CROPS
+      # list of all valid tags can be found here https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Tag.html
+      harvestable-materials:
+        - 'GRASS'
+        - 'TALL_GRASS'
+        - 'FLOWERS'
+        - 'CROPS'
+      # if set to false player will be able to hoe-harvest even without sneaking
+      require-sneaking: true
