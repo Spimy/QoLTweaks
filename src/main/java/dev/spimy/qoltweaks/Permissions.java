@@ -7,12 +7,21 @@ public enum Permissions {
     PET_DOG("petdog"),
     PET_CAT("petcat"),
     PREVENT_PET_DAMAGE("preventpetdamage"),
-    HOE_HARVEST("hoeharvest");
+    HOE_HARVEST("hoeharvest"),
+    RELOAD("reload", true);
+
 
     private final String permissionNode;
 
     Permissions(String permissionNode) {
         this.permissionNode = String.format("qoltweaks.%s", permissionNode);
+    }
+    Permissions(String permissionNode, boolean command) {
+        if (command) {
+            this.permissionNode = String.format("qoltweaks.%s", permissionNode);
+        } else {
+            this.permissionNode = String.format("qoltweaks.command.%s", permissionNode);
+        }
     }
 
     public String getPermissionNode() {
