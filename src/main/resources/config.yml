@@ -16,3 +16,12 @@ modules:
     nametag-shear:
       enabled: true
       require-permission: false
+    petting:
+      enabled: true
+      require-permission:
+        pet-dog: false
+        pet-cat: false
+      cooldown:
+        dog: 5
+        cat: 5
+      heal: true
