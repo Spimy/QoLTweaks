@@ -37,6 +37,7 @@ public class Petting implements Listener {
         if (entity.getType() != EntityType.WOLF && entity.getType() != EntityType.CAT) return;
 
         long cooldownTimer = 20;
+        Sound petSound = Sound.ENTITY_EXPERIENCE_ORB_PICKUP;
 
         if (entity.getType() == EntityType.WOLF) {
             if (config.getBoolean(("petting.require-permission.pet-dog"))) {
@@ -44,6 +45,7 @@ public class Petting implements Listener {
             }
             if (!((Wolf) entity).isSitting()) return;
             cooldownTimer = config.getLong("petting.cooldown.dog", cooldownTimer);
+            petSound = Sound.ENTITY_WOLF_WHINE;
         }
 
         if (entity.getType() == EntityType.CAT) {
@@ -52,6 +54,7 @@ public class Petting implements Listener {
             }
             if (!((Cat) entity).isSitting()) return;
             cooldownTimer = config.getLong("petting.cooldown.cat", cooldownTimer);
+            petSound = Sound.ENTITY_CAT_PURREOW;
         }
 
         Tameable pet = (Tameable) entity;
@@ -62,7 +65,7 @@ public class Petting implements Listener {
         Location location = pet.getLocation();
 
         player.getWorld().spawnParticle(Particle.HEART, location.add(0, 0.5, 0), 1, 0, 0, 0, 0.1);
-        player.getWorld().playSound(location, Sound.ENTITY_WOLF_WHINE, 1F, 0.5F + (float) Math.random() * 0.5F);
+        player.getWorld().playSound(location, petSound, 1F, 0.5F + (float) Math.random() * 0.5F);
         player.swingMainHand();
         pettingTimer.setPetTime();
 
