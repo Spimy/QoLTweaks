@@ -4,6 +4,7 @@ import dev.spimy.qoltweaks.QoLTweaks;
 import dev.spimy.qoltweaks.modules.blocks.LadderWarp;
 import dev.spimy.qoltweaks.modules.enchanting.BookExtract;
 import dev.spimy.qoltweaks.modules.entities.NametagShear;
+import dev.spimy.qoltweaks.modules.entities.petting.Petting;
 import org.bukkit.event.Listener;
 
 public class ModuleLoader {
@@ -23,6 +24,7 @@ public class ModuleLoader {
         this.registerEvent(new LadderWarp(plugin));
         this.registerEvent(new BookExtract(plugin));
         this.registerEvent(new NametagShear(plugin));
+        this.registerEvent(new Petting(plugin));
     }
 
 }
