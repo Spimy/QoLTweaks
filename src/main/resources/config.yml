@@ -2,6 +2,7 @@ lang:
   prefix: "&6QoLTweals &7»"
   not-exist: "&cThis command does not exist."
   reloaded: "&aConfig has been reloaded."
+  no-permission: "&cYou do not have the permission required to run this command."
 
 modules:
   blocks:
