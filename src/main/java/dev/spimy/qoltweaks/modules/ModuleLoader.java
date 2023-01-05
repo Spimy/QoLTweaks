@@ -2,6 +2,7 @@ package dev.spimy.qoltweaks.modules;
 
 import dev.spimy.qoltweaks.QoLTweaks;
 import dev.spimy.qoltweaks.modules.blocks.LadderWarp;
+import dev.spimy.qoltweaks.modules.blocks.TNTDropRate;
 import dev.spimy.qoltweaks.modules.enchanting.BookExtract;
 import dev.spimy.qoltweaks.modules.entities.NametagShear;
 import dev.spimy.qoltweaks.modules.entities.PreventPetDamage;
@@ -29,6 +30,7 @@ public class ModuleLoader {
         this.registerEvent(new Petting(plugin));
         this.registerEvent(new PreventPetDamage(plugin));
         this.registerEvent(new HoeHarvest(plugin));
+        this.registerEvent(new TNTDropRate());
     }
 
 }
