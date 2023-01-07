@@ -1,11 +1,5 @@
 package dev.spimy.qoltweaks.modules.misc;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.ListenerPriority;
-import com.comphenix.protocol.events.PacketAdapter;
-import com.comphenix.protocol.events.PacketEvent;
 import com.destroystokyo.paper.event.server.PaperServerListPingEvent;
 import dev.spimy.qoltweaks.Modules;
 import dev.spimy.qoltweaks.QoLTweaks;
@@ -19,7 +13,6 @@ import java.awt.image.BufferedImage;
 import java.net.InetSocketAddress;
 import java.net.URL;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 public class RestrictPing implements Listener {
