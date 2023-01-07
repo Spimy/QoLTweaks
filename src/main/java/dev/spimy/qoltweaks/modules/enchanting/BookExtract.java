@@ -43,6 +43,7 @@ public class BookExtract implements Listener {
 
         if (event.isShiftClick()) {
             if (clickedItem == null || clickedItem.getType() != Material.BOOK) return;
+            if (event.getSlot() == 2) return;
             event.setCancelled(true);
 
             if (event.getSlot() == 1) {
