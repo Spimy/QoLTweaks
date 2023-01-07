@@ -9,8 +9,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
@@ -46,9 +49,22 @@ public class RestrictPing implements Listener {
         try {
             URL url = new URL(ICON_URL);
             BufferedImage img = ImageIO.read(url);
-            event.setServerIcon(Bukkit.loadServerIcon(img));
-        } catch (Exception e) {
-            plugin.getLogger().warning("Failed to load offline server icon.");
+            try {
+                Image resizedImage = img.getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+                BufferedImage resizedIcon = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
+
+                Graphics2D g2d = resizedIcon.createGraphics();
+                g2d.drawImage(resizedImage, 0, 0, null);
+                g2d.dispose();
+
+                event.setServerIcon(Bukkit.loadServerIcon(resizedIcon));
+            } catch (Exception e) {
+                plugin.getLogger().warning("Failed to load offline server icon.");
+            }
+        } catch (MalformedURLException e) {
+            plugin.getLogger().warning("Failed to load url of offline server icon.");
+        } catch (IOException e) {
+            plugin.getLogger().warning("Failed to read image from url provided.");
         }
 
     }
