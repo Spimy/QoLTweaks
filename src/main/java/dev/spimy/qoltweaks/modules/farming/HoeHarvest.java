@@ -52,7 +52,7 @@ public class HoeHarvest implements Listener {
 
         if (!player.isSneaking() && config.getBoolean("hoe-harvest.require-sneaking")) return;
         ItemStack item = player.getInventory().getItemInMainHand();
-        Location breakenBlock = event.getBlock().getLocation();
+        Location brokenBlock = event.getBlock().getLocation();
 
         if (matchesHarvestable(event.getBlock().getType())) {
             String itemType = item.getType().toString();
@@ -64,9 +64,9 @@ public class HoeHarvest implements Listener {
             }
 
             int range = getRange(itemType);
-            for (int x = breakenBlock.getBlockX() - range; x <= breakenBlock.getBlockX() + range; x++) {
-                for (int z = breakenBlock.getBlockZ() - range; z <= breakenBlock.getBlockZ() + range; z++) {
-                    Location location = new Location(breakenBlock.getWorld(), x, breakenBlock.getBlockY(), z);
+            for (int x = brokenBlock.getBlockX() - range; x <= brokenBlock.getBlockX() + range; x++) {
+                for (int z = brokenBlock.getBlockZ() - range; z <= brokenBlock.getBlockZ() + range; z++) {
+                    Location location = new Location(brokenBlock.getWorld(), x, brokenBlock.getBlockY(), z);
                     Material blockType = location.getBlock().getType();
 
                     if (matchesHarvestable(blockType)) {
