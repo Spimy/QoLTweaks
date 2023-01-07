@@ -8,6 +8,8 @@ import dev.spimy.qoltweaks.modules.entities.NametagShear;
 import dev.spimy.qoltweaks.modules.entities.PreventPetDamage;
 import dev.spimy.qoltweaks.modules.entities.petting.Petting;
 import dev.spimy.qoltweaks.modules.farming.HoeHarvest;
+import dev.spimy.qoltweaks.modules.misc.HostnameWhitelist;
+import dev.spimy.qoltweaks.modules.misc.RestrictPing;
 import org.bukkit.event.Listener;
 
 public class ModuleLoader {
@@ -31,6 +33,8 @@ public class ModuleLoader {
         this.registerEvent(new PreventPetDamage(plugin));
         this.registerEvent(new HoeHarvest(plugin));
         this.registerEvent(new TNTDropRate());
+        this.registerEvent(new RestrictPing(plugin));
+        this.registerEvent(new HostnameWhitelist(plugin));
     }
 
 }

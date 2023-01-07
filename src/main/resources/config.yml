@@ -3,6 +3,7 @@ lang:
   not-exist: "&cThis command does not exist."
   reloaded: "&aConfig has been reloaded."
   no-permission: "&cYou do not have the permission required to run this command."
+  invalid-hostname: "Unknown host"
 
 modules:
   blocks:
@@ -52,3 +53,13 @@ modules:
         - 'CROPS'
       # if set to false player will be able to hoe-harvest even without sneaking
       require-sneaking: true
+  misc:
+    restrict-ping:
+      enabled: true
+    hostname-whitelist:
+      enabled: true
+      block-legacy: true
+
+# Used by restrict-ping and hostname-whitelist
+allowed-hostnames:
+  - localhost
