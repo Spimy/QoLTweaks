@@ -4,15 +4,25 @@ import dev.spimy.qoltweaks.QoLTweaks;
 import dev.spimy.qoltweaks.commands.subcommands.SubCommand;
 import dev.spimy.qoltweaks.commands.subcommands.SubCommandHandler;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 
-public class Help implements SubCommand {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-    private final QoLTweaks plugin;
+public class Help extends SubCommand {
+
+    private final QoLTweaks plugin = QoLTweaks.getInstance();
     private final SubCommandHandler handler;
 
-    public Help(QoLTweaks plugin, SubCommandHandler handler) {
-        this.plugin = plugin;
+    public Help(SubCommandHandler handler) {
+        super(
+            "help",
+            "View list of commands.",
+            new HashMap<>() {{
+                put("[command]", "View detailed help for the command provided.");
+            }}
+        );
         this.handler = handler;
     }
 
@@ -20,68 +30,55 @@ public class Help implements SubCommand {
     public boolean execute(CommandSender sender, String[] args) {
         if (args.length == 0) {
             sender.sendMessage(
-                    plugin.formatMessage(
-                            String.format(
-                                    "&7-= &6QoLTweaks &7=-\n%s",
-                                    String.join("\n", handler.getCommandList())
-                            )
+                plugin.getMessageManager().formatMessage(
+                    String.format(
+                        "&7-= &6QoLTweaks &7=-\n%s",
+                        String.join("\n", handler.getCommandList())
                     )
+                )
             );
             return true;
         }
 
         String command = args[0];
         SubCommand subCommand = handler.getSubCommand(command);
-        ConfigurationSection config = plugin.getConfig().getConfigurationSection("lang");
 
         if (subCommand == null) {
-            sender.sendMessage(
-                    plugin.formatMessage(
-                            String.format(
-                                    "%s %s",
-                                    config.getString("prefix"),
-                                    config.getString("not-exist")
-                            )
-                    )
-            );
+            sender.sendMessage(plugin.getMessageManager().getConfigMessage("not-exist", true));
             return true;
         }
 
         sender.sendMessage(
-                plugin.formatMessage(
-                        String.join("\n", new String[]
-                                {
-                                        String.format("&7-= &6View further details for '%s' &7=-", command),
-                                        String.format(
-                                                "&6/%s %s %s: &a%s\n%s",
-                                                plugin.getClass().getSimpleName().toLowerCase(),
-                                                command,
-                                                subCommand.getArgumentsList(),
-                                                subCommand.getDescription(),
-                                                subCommand.getDetailedDescription()
-                                        )
-                                }
+            plugin.getMessageManager().formatMessage(
+                String.join("\n", new String[]
+                    {
+                        String.format("&7-= &6Viewing detailed help for '%s' &7=-", command),
+                        String.format(
+                            "&6/%s %s %s: &a%s\n%s",
+                            plugin.getClass().getSimpleName().toLowerCase(),
+                            command,
+                            String.join(" ", subCommand.getArguments().keySet()),
+                            subCommand.getDescription(),
+                            String.join(
+                                "\n",
+                                formatArguments(subCommand.getArguments())
+                            )
                         )
+                    }
                 )
+            )
         );
         return true;
     }
 
-    @Override
-    public String getDescription() {
-        return "View this list of commands. You may provide the name of a command to get more detailed help.";
-    }
+    private List<String> formatArguments(HashMap<String, String> arguments) {
+        final List<String> formattedArguments = new ArrayList<>();
 
-    @Override
-    public String getArgumentsList() {
-        return "[command]";
-    }
+        for (Map.Entry<String, String> entry : arguments.entrySet()) {
+            formattedArguments.add(String.format("&6%s: &a%s", entry.getKey(), entry.getValue()));
+        }
 
-    @Override
-    public String getDetailedDescription() {
-        return String.join("\n", new String[]
-                {"&6[command]: &acommand for which more details to show."}
-        );
+        return formattedArguments;
     }
 
 }
