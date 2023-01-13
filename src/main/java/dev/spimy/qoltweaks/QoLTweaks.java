@@ -12,7 +12,7 @@ public final class QoLTweaks extends JavaPlugin {
 
     private static QoLTweaks plugin;
 
-    private MessageManager messageManager;
+    private final MessageManager messageManager = new MessageManager();
     private final HashMap<String, ConfigManager> configManagers = new HashMap<>();
 
     @Override
@@ -21,8 +21,6 @@ public final class QoLTweaks extends JavaPlugin {
 
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
-
-        messageManager = new MessageManager();
 
         new CommandLoader();
         new ModuleLoader();
