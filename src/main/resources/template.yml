@@ -1,0 +1,6 @@
+# Whether to enable the module or not
+enabled: true
+
+# Whether permission is required or not
+# Requires a permissions plugin if set to true
+require-permission: false
