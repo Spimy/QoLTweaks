@@ -26,18 +26,14 @@ public class PettingTimer {
         return timeSinceLastPet() > cooldown;
     }
 
-    public long getPatTime() {
+    @SuppressWarnings("ConstantConditions")
+    public long getPetTime() {
         return data.has(key, PersistentDataType.LONG) ? data.get(key, PersistentDataType.LONG) : 0;
     }
 
     public long timeSinceLastPet() {
-        if (!tameable.isTamed()) {
-            return 0;
-        }
-        long lastPetAt = 0;
-        if (data.has(key, PersistentDataType.LONG)) {
-            lastPetAt = data.get(key, PersistentDataType.LONG);
-        }
+        if (!tameable.isTamed()) return 0;
+        long lastPetAt = getPetTime();
         return tameable.getWorld().getGameTime() - lastPetAt;
     }
 
