@@ -4,16 +4,15 @@ import dev.spimy.qoltweaks.QoLTweaks;
 
 public class CommandLoader {
 
-    private final QoLTweaks plugin;
+    private final QoLTweaks plugin = QoLTweaks.getInstance();
 
-    public CommandLoader(QoLTweaks plugin) {
-        this.plugin = plugin;
+    public CommandLoader() {
         registerCommands();
     }
 
-
-    private void registerCommands() {
-        plugin.getCommand("qoltweaks").setExecutor(new BaseCommand(plugin));
+    @SuppressWarnings("ConstantConditions")
+    public void registerCommands() {
+        plugin.getCommand(plugin.getClass().getSimpleName().toLowerCase()).setExecutor(new BaseCommand());
     }
 
 }
