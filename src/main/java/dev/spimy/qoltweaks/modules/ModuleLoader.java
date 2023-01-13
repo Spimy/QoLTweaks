@@ -2,23 +2,23 @@ package dev.spimy.qoltweaks.modules;
 
 import dev.spimy.qoltweaks.QoLTweaks;
 import dev.spimy.qoltweaks.modules.blocks.LadderWarp;
-import dev.spimy.qoltweaks.modules.blocks.TNTDropRate;
+import dev.spimy.qoltweaks.modules.blocks.TntDropRate;
 import dev.spimy.qoltweaks.modules.enchanting.BookExtract;
+import dev.spimy.qoltweaks.modules.entities.AntiEndermanGrief;
 import dev.spimy.qoltweaks.modules.entities.NametagShear;
 import dev.spimy.qoltweaks.modules.entities.PreventPetDamage;
 import dev.spimy.qoltweaks.modules.entities.petting.Petting;
 import dev.spimy.qoltweaks.modules.farming.HoeHarvest;
-import dev.spimy.qoltweaks.modules.misc.HostnameWhitelist;
-import dev.spimy.qoltweaks.modules.misc.RestrictPing;
+import dev.spimy.qoltweaks.modules.security.HostnameWhitelist;
+import dev.spimy.qoltweaks.modules.security.RestrictPing;
 import org.bukkit.event.Listener;
 
 public class ModuleLoader {
 
-    QoLTweaks plugin;
+    private final QoLTweaks plugin = QoLTweaks.getInstance();
 
-    public ModuleLoader(QoLTweaks plugin) {
-        this.plugin = plugin;
-        this.loadModules();
+    public ModuleLoader() {
+        loadModules();
     }
 
     private void registerEvent(Listener event) {
@@ -26,15 +26,16 @@ public class ModuleLoader {
     }
 
     private void loadModules() {
-        this.registerEvent(new LadderWarp(plugin));
-        this.registerEvent(new BookExtract(plugin));
-        this.registerEvent(new NametagShear(plugin));
-        this.registerEvent(new Petting(plugin));
-        this.registerEvent(new PreventPetDamage(plugin));
-        this.registerEvent(new HoeHarvest(plugin));
-        this.registerEvent(new TNTDropRate());
-        this.registerEvent(new RestrictPing(plugin));
-        this.registerEvent(new HostnameWhitelist(plugin));
+        this.registerEvent(new LadderWarp());
+        this.registerEvent(new BookExtract());
+        this.registerEvent(new NametagShear());
+        this.registerEvent(new Petting());
+        this.registerEvent(new PreventPetDamage());
+        this.registerEvent(new HoeHarvest());
+        this.registerEvent(new TntDropRate());
+        this.registerEvent(new RestrictPing());
+        this.registerEvent(new HostnameWhitelist());
+        this.registerEvent(new AntiEndermanGrief());
     }
 
 }
