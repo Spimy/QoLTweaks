@@ -1,64 +1,9 @@
 lang:
-  prefix: "&6QoLTweals &7»"
+  prefix: "&6QoLTweaks &7»"
   not-exist: "&cThis command does not exist."
-  reloaded: "&aConfig has been reloaded."
+  reloaded: "&aConfigs have been reloaded."
   no-permission: "&cYou do not have the permission required to run this command."
   invalid-hostname: "Unknown host"
-
-modules:
-  blocks:
-    ladder-warp:
-      enabled: true
-      require-permission: false
-  enchanting:
-    book-extract:
-      enabled: true
-      require-permission: false
-  entities:
-    nametag-shear:
-      enabled: true
-      require-permission: false
-    petting:
-      enabled: true
-      require-permission:
-        pet-dog: false
-        pet-cat: false
-      cooldown:
-        dog: 5
-        cat: 5
-      heal: true
-    prevent-pet-damage:
-      enabled: true
-      require-permission: false
-  farming:
-    hoe-harvest:
-      enabled: true
-      require-permissions: false
-      # range at which area will be cleared.
-      # e.g, if range is set to 1, a 3x3 area will be cleared
-      # if set to 2, a 5x5 area will be cleared
-      range:
-        wooden: 1
-        stone: 1
-        iron: 2
-        diamond: 2
-        netherite: 2
-      # list of materials that can be harvested within range
-      # you can use tags too to consider a group of similar materials like FLOWERS and CROPS
-      # list of all valid tags can be found here https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Tag.html
-      harvestable-materials:
-        - 'GRASS'
-        - 'TALL_GRASS'
-        - 'FLOWERS'
-        - 'CROPS'
-      # if set to false player will be able to hoe-harvest even without sneaking
-      require-sneaking: true
-  misc:
-    restrict-ping:
-      enabled: true
-    hostname-whitelist:
-      enabled: true
-      block-legacy: true
 
 # Used by restrict-ping and hostname-whitelist
 allowed-hostnames:
