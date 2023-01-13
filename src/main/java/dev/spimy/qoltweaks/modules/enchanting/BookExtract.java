@@ -1,32 +1,26 @@
 package dev.spimy.qoltweaks.modules.enchanting;
 
-import dev.spimy.qoltweaks.Modules;
-import dev.spimy.qoltweaks.Permissions;
 import dev.spimy.qoltweaks.QoLTweaks;
+import dev.spimy.qoltweaks.modules.Module;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.GrindstoneInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class BookExtract implements Listener {
+public class BookExtract extends Module {
 
-    private final QoLTweaks plugin;
-
-    public BookExtract(QoLTweaks plugin) {
-        this.plugin = plugin;
+    public BookExtract() {
+        super();
     }
 
     @EventHandler
     public void onGrindstone(InventoryClickEvent event) {
-        ConfigurationSection config = plugin.configManager.getModuleConfig(Modules.ENCHANTING);
-        if (!config.getBoolean("book-extract.enabled")) return;
+        if (isDisabled()) return;
 
         if (!(event.getView().getTopInventory() instanceof GrindstoneInventory)) return;
 
@@ -35,10 +29,7 @@ public class BookExtract implements Listener {
         ItemStack clickedItem = event.getCurrentItem();
         Player player = (Player) event.getWhoClicked();
 
-        if (config.getBoolean(("book-extract.require-permission"))) {
-            if (!player.hasPermission(Permissions.BOOK_EXTRACT.getPermissionNode())) return;
-        }
-
+        if (isMissingPermission(player)) return;
         if (cursor == null) return;
 
         if (event.isShiftClick()) {
@@ -83,7 +74,7 @@ public class BookExtract implements Listener {
                 }
 
             }
-        }.runTaskLater(plugin, 2);
+        }.runTaskLater(QoLTweaks.getInstance(), 2);
 
     }
 

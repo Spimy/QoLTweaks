@@ -1,49 +1,36 @@
 package dev.spimy.qoltweaks.modules.blocks;
 
-import dev.spimy.qoltweaks.Modules;
-import dev.spimy.qoltweaks.Permissions;
-import dev.spimy.qoltweaks.QoLTweaks;
+import dev.spimy.qoltweaks.modules.Module;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.util.Vector;
 
-public class LadderWarp implements Listener {
-
-    private final QoLTweaks plugin;
-
-    public LadderWarp(QoLTweaks plugin) {
-        this.plugin = plugin;
-    }
+public class LadderWarp extends Module {
 
     @EventHandler
     public void onLadderClick(PlayerInteractEvent event) {
-        ConfigurationSection config = plugin.configManager.getModuleConfig(Modules.BLOCKS);
-        if (!config.getBoolean("ladder-warp.enabled")) return;
+        if (isDisabled()) return;
 
         Player player = event.getPlayer();
 
         if (event.getItem() != null) return;
-        if (!event.getPlayer().isSneaking()) return;
+        if (!player.isSneaking()) return;
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if (event.getHand() != EquipmentSlot.HAND) return;
         if (event.getClickedBlock() != null && event.getClickedBlock().getType() != Material.LADDER) return;
 
-        if (config.getBoolean(("ladder-warp.require-permission"))) {
-            if (!player.hasPermission(Permissions.LADDERWARP.getPermissionNode())) return;
-        }
+        if (isMissingPermission(player)) return;
 
         Block ladder = event.getClickedBlock();
         Vector face = player.getEyeLocation().getDirection().clone();
-        
+
         if (ladder.getRelative(BlockFace.DOWN).getType() != Material.LADDER) {
             Block topBlock = getFirstNonLadderBlock(ladder, BlockFace.UP);
             if (topBlock != null) {

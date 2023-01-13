@@ -1,45 +1,57 @@
 package dev.spimy.qoltweaks.modules.farming;
 
-import dev.spimy.qoltweaks.Modules;
-import dev.spimy.qoltweaks.Permissions;
 import dev.spimy.qoltweaks.QoLTweaks;
+import dev.spimy.qoltweaks.modules.Module;
 import org.bukkit.*;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class HoeHarvest implements Listener {
+public class HoeHarvest extends Module {
 
-    private final QoLTweaks plugin;
-
-    public HoeHarvest(QoLTweaks plugin) {
-        this.plugin = plugin;
+    public HoeHarvest() {
+        super(
+                new HashMap<>() {{
+                    put("range.wooden", 1);
+                    put("range.stone", 1);
+                    put("range.iron", 2);
+                    put("range.diamond", 2);
+                    put("range.netherite", 2);
+                    put(
+                            "harvestable-materials",
+                            new String[]{
+                                    "GRASS",
+                                    "TALL_GRASS",
+                                    "FLOWERS",
+                                    "CROPS"
+                            }
+                    );
+                    put("require-sneaking", true);
+                }}
+        );
     }
 
     private int getRange(String itemType) {
-        ConfigurationSection config = plugin.configManager.getModuleConfig(Modules.FARMING);
-
         switch (itemType) {
             case "WOODEN_HOE":
-                return config.getInt("hoe-harvest.range.wooden");
+                return getConfig().getInt("range.wooden");
             case "STONE_HOE":
-                return config.getInt("hoe-harvest.range.stone");
+                return getConfig().getInt("range.stone");
             case "IRON_HOE":
-                return config.getInt("hoe-harvest.range.iron");
+                return getConfig().getInt("range.iron");
             case "DIAMOND_HOE":
-                return config.getInt("hoe-harvest.range.diamond");
+                return getConfig().getInt("range.diamond");
             case "NETHERITE_HOE":
-                return config.getInt("hoe-harvest.range.netherite");
+                return getConfig().getInt("range.netherite");
             default:
                 return 1;
         }
@@ -48,20 +60,16 @@ public class HoeHarvest implements Listener {
     @EventHandler
     public void onHarvest(BlockBreakEvent event) {
         Player player = event.getPlayer();
-        ConfigurationSection config = plugin.configManager.getModuleConfig(Modules.FARMING);
 
-        if (!player.isSneaking() && config.getBoolean("hoe-harvest.require-sneaking")) return;
         ItemStack item = player.getInventory().getItemInMainHand();
         Location brokenBlock = event.getBlock().getLocation();
 
         if (matchesHarvestable(event.getBlock().getType())) {
             String itemType = item.getType().toString();
             if (!itemType.endsWith("_HOE")) return;
-
-            if (!config.getBoolean("hoe-harvest.enabled")) return;
-            if (config.getBoolean(("hoe-harvest.require-permission"))) {
-                if (!player.hasPermission(Permissions.HOE_HARVEST.getPermissionNode())) return;
-            }
+            if (!player.isSneaking() && getConfig().getBoolean("require-sneaking")) return;
+            if (isDisabled()) return;
+            if (isMissingPermission(player)) return;
 
             int range = getRange(itemType);
             for (int x = brokenBlock.getBlockX() - range; x <= brokenBlock.getBlockX() + range; x++) {
@@ -96,7 +104,7 @@ public class HoeHarvest implements Listener {
 
         if (player != null) {
             PlayerItemDamageEvent damageEvent = new PlayerItemDamageEvent(player, item, amount);
-            plugin.getServer().getPluginManager().callEvent(damageEvent);
+            QoLTweaks.getInstance().getServer().getPluginManager().callEvent(damageEvent);
 
             if (amount != damageEvent.getDamage() || damageEvent.isCancelled()) {
                 damageEvent.getPlayer().updateInventory();
@@ -112,8 +120,7 @@ public class HoeHarvest implements Listener {
     }
 
     private boolean matchesHarvestable(Material mat) {
-        ConfigurationSection config = plugin.configManager.getModuleConfig(Modules.FARMING);
-        return matchString(mat.toString(), config.getStringList("hoe-harvest.harvestable-materials")) || matchTag(mat, config.getStringList("hoe-harvest.harvestable-materials"));
+        return matchString(mat.toString(), getConfig().getStringList("harvestable-materials")) || matchTag(mat, getConfig().getStringList("harvestable-materials"));
     }
 
     private boolean matchString(String str, List<String> matcher) {

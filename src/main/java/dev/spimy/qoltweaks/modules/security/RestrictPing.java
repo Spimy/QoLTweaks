@@ -1,12 +1,11 @@
-package dev.spimy.qoltweaks.modules.misc;
+package dev.spimy.qoltweaks.modules.security;
 
 import com.destroystokyo.paper.event.server.PaperServerListPingEvent;
-import dev.spimy.qoltweaks.Modules;
 import dev.spimy.qoltweaks.QoLTweaks;
+import dev.spimy.qoltweaks.config.RemovableConfigPaths;
+import dev.spimy.qoltweaks.modules.Module;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,19 +17,21 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
-public class RestrictPing implements Listener {
+public class RestrictPing extends Module {
 
-    private final QoLTweaks plugin;
+    private final QoLTweaks plugin = QoLTweaks.getInstance();
 
-    public RestrictPing(QoLTweaks plugin) {
-        this.plugin = plugin;
+    public RestrictPing() {
+        super(
+                new RemovableConfigPaths[]{
+                        RemovableConfigPaths.REQUIRE_PERMISSION
+                }
+        );
     }
 
     @EventHandler()
     public void onPing(PaperServerListPingEvent event) {
-
-        ConfigurationSection config = plugin.configManager.getModuleConfig(Modules.MISC);
-        if (!config.getBoolean("restrict-ping.enabled")) return;
+        if (isDisabled()) return;
 
         InetSocketAddress virtualAddress = event.getClient().getVirtualHost();
         if (virtualAddress == null) {

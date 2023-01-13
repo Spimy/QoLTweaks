@@ -1,37 +1,29 @@
 package dev.spimy.qoltweaks.modules.entities;
 
-import dev.spimy.qoltweaks.Modules;
-import dev.spimy.qoltweaks.Permissions;
-import dev.spimy.qoltweaks.QoLTweaks;
+import dev.spimy.qoltweaks.modules.Module;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class NametagShear implements Listener {
+public class NametagShear extends Module {
 
-    private final QoLTweaks plugin;
-
-    public NametagShear(QoLTweaks plugin) {
-        this.plugin = plugin;
+    public NametagShear() {
+        super();
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onNameTagShear(PlayerInteractAtEntityEvent event) {
         if (event.isCancelled()) return;
-
-        ConfigurationSection config = plugin.configManager.getModuleConfig(Modules.ENTITIES);
-        if (!config.getBoolean("nametag-shear.enabled")) return;
+        if (isDisabled()) return;
 
         Player player = event.getPlayer();
         ItemStack item = player.getInventory().getItem(event.getHand());
@@ -41,9 +33,7 @@ public class NametagShear implements Listener {
         if (item.getType() != Material.SHEARS) return;
         if (!player.isSneaking()) return;
 
-        if (config.getBoolean(("nametag-shear.require-permission"))) {
-            if (!player.hasPermission(Permissions.NAMETAG_SHEAR.getPermissionNode())) return;
-        }
+        if (isMissingPermission(player)) return;
 
         event.setCancelled(true);
 
@@ -62,7 +52,7 @@ public class NametagShear implements Listener {
         player.getWorld().dropItemNaturally(entity.getLocation(), nameTag);
         player.getWorld().playSound(entity.getLocation(), Sound.ENTITY_SHEEP_SHEAR, 1, 1);
 
-        if (entity instanceof ArmorStand){
+        if (entity instanceof ArmorStand) {
             entity.setCustomNameVisible(false);
         }
 
