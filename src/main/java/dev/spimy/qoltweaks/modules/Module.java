@@ -55,7 +55,7 @@ public abstract class Module implements Listener {
         if (splitPackageName.length > 5) {
             remainingPaths = new ArrayList<>(
                 Arrays.asList(splitPackageName)
-            ).subList(5, splitPackageName.length);
+            ).subList(5, splitPackageName.length - 1);
         }
 
         String moduleType = splitPackageName[4];
