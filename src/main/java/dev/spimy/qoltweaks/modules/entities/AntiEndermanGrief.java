@@ -10,7 +10,7 @@ public class AntiEndermanGrief extends Module {
 
     public AntiEndermanGrief() {
         super(
-            new RemovableConfigPaths[] {
+            new RemovableConfigPaths[]{
                 RemovableConfigPaths.REQUIRE_PERMISSION
             }
         );

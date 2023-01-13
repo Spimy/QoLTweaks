@@ -10,4 +10,4 @@ commands:
   qoltweaks:
     description: Base command for QoLTweaks
     usage: /<command>
-    aliases: [qol]
+    aliases: [ qol ]

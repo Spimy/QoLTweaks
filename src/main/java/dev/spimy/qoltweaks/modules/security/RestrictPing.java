@@ -23,9 +23,9 @@ public class RestrictPing extends Module {
 
     public RestrictPing() {
         super(
-                new RemovableConfigPaths[]{
-                        RemovableConfigPaths.REQUIRE_PERMISSION
-                }
+            new RemovableConfigPaths[]{
+                RemovableConfigPaths.REQUIRE_PERMISSION
+            }
         );
     }
 

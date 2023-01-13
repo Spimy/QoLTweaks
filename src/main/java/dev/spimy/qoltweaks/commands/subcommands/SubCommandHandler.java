@@ -4,7 +4,8 @@ import dev.spimy.qoltweaks.QoLTweaks;
 import dev.spimy.qoltweaks.commands.subcommands.commands.Help;
 import dev.spimy.qoltweaks.commands.subcommands.commands.Reload;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class SubCommandHandler {

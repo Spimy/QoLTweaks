@@ -20,23 +20,23 @@ public class HoeHarvest extends Module {
 
     public HoeHarvest() {
         super(
-                new HashMap<>() {{
-                    put("range.wooden", 1);
-                    put("range.stone", 1);
-                    put("range.iron", 2);
-                    put("range.diamond", 2);
-                    put("range.netherite", 2);
-                    put(
-                            "harvestable-materials",
-                            new String[]{
-                                    "GRASS",
-                                    "TALL_GRASS",
-                                    "FLOWERS",
-                                    "CROPS"
-                            }
-                    );
-                    put("require-sneaking", true);
-                }}
+            new HashMap<>() {{
+                put("range.wooden", 1);
+                put("range.stone", 1);
+                put("range.iron", 2);
+                put("range.diamond", 2);
+                put("range.netherite", 2);
+                put(
+                    "harvestable-materials",
+                    new String[]{
+                        "GRASS",
+                        "TALL_GRASS",
+                        "FLOWERS",
+                        "CROPS"
+                    }
+                );
+                put("require-sneaking", true);
+            }}
         );
     }
 
