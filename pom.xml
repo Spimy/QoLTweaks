@@ -13,7 +13,7 @@
 
     <description>Tweaks to improve Quality of Life while keeping it as close to Vanilla as possible</description>
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>19</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <url>https://spimy.dev</url>
