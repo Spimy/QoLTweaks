@@ -1,38 +1,50 @@
 package dev.spimy.qoltweaks;
 
 import dev.spimy.qoltweaks.commands.CommandLoader;
+import dev.spimy.qoltweaks.config.ConfigManager;
 import dev.spimy.qoltweaks.modules.ModuleLoader;
-import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
+
 public final class QoLTweaks extends JavaPlugin {
 
-    public ConfigManager configManager;
+    private static QoLTweaks plugin;
+
+    private MessageManager messageManager;
+    private final HashMap<String, ConfigManager> configManagers = new HashMap<>();
 
     @Override
     public void onEnable() {
+        plugin = this;
+
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
 
-        configManager = new ConfigManager(this);
-        new CommandLoader(this);
-        new ModuleLoader(this);
+        messageManager = new MessageManager();
 
-        getServer().getConsoleSender().sendMessage(
-                formatMessage("&aQoLTweaks enabled.")
-        );
+        new CommandLoader();
+        new ModuleLoader();
+
+        getLogger().info("QoLTweaks enabled.");
     }
 
     @Override
     public void onDisable() {
-        getServer().getConsoleSender().sendMessage(
-                formatMessage("&cQoLTweaks disabled.")
-        );
+        getLogger().info("QoLTweaks disabled.");
     }
 
-    public String formatMessage(String message) {
-        return ChatColor.translateAlternateColorCodes('&', message);
+    public MessageManager getMessageManager() {
+        return messageManager;
+    }
+
+    public HashMap<String, ConfigManager> getConfigManagers() {
+        return configManagers;
+    }
+
+    public static QoLTweaks getInstance() {
+        return plugin;
     }
 
     public NamespacedKey getKey(String key) {
