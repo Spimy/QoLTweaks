@@ -4,38 +4,37 @@ import dev.spimy.qoltweaks.QoLTweaks;
 import dev.spimy.qoltweaks.commands.subcommands.commands.Help;
 import dev.spimy.qoltweaks.commands.subcommands.commands.Reload;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class SubCommandHandler {
 
-    private final QoLTweaks plugin;
-    private final HashMap<String, SubCommand> subCommands = new HashMap<>();
+    private final List<SubCommand> subCommands = new ArrayList<>();
 
 
-    public SubCommandHandler(QoLTweaks plugin) {
-        this.plugin = plugin;
-        subCommands.put("reload", new Reload(plugin));
-        subCommands.put("help", new Help(plugin, this));
+    public SubCommandHandler() {
+        subCommands.add(new Reload());
+        subCommands.add(new Help(this));
     }
 
     public SubCommand getSubCommand(String command) {
-        return subCommands.get(command);
+        return subCommands.stream().filter(subCommand -> subCommand.getName().equalsIgnoreCase(command)).findFirst().orElse(null);
+    }
+
+    public List<String> getSubCommandNames() {
+        return this.subCommands.stream().map(SubCommand::getName).collect(Collectors.toList());
     }
 
     public ArrayList<String> getCommandList() {
         ArrayList<String> commandList = new ArrayList<>();
 
-        for (Map.Entry<String, SubCommand> entry : subCommands.entrySet()) {
-            commandList.add(String.format(
-                    "&6/%s %s %s: &a%s",
-                    plugin.getClass().getSimpleName().toLowerCase(),
-                    entry.getKey(),
-                    entry.getValue().getArgumentsList(),
-                    entry.getValue().getDescription()
-            ));
-        }
+        subCommands.forEach(subCommand -> commandList.add(String.format(
+            "&6/%s %s %s: &a%s",
+            QoLTweaks.getInstance().getClass().getSimpleName().toLowerCase(),
+            subCommand.getName(),
+            String.join(" ", subCommand.getArguments().keySet()),
+            subCommand.getDescription()
+        )));
 
         return commandList;
     }
