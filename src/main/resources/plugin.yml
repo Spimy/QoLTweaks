@@ -5,6 +5,7 @@ api-version: 1.19
 authors: [ Spimy ]
 description: Tweaks to improve Quality of Life while keeping it as close to Vanilla as possible
 website: https://spimy.dev
+softdepend: [ ProtocolLib ]
 
 commands:
   qoltweaks:
