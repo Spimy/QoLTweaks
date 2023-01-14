@@ -1,11 +1,13 @@
 package dev.spimy.qoltweaks.modules;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import dev.spimy.qoltweaks.QoLTweaks;
 import dev.spimy.qoltweaks.config.ConfigManager;
 import dev.spimy.qoltweaks.config.RemovableConfigPaths;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,36 +17,43 @@ import java.util.List;
 public abstract class Module implements Listener {
 
     private String name;
+    private boolean requireProtocolLib;
+
     private ConfigManager configManager;
     private final HashMap<String, String> permissionNodes = new HashMap<>();
 
+
     private final QoLTweaks plugin = QoLTweaks.getInstance();
     private final String DEFAULT_PERMISSION_KEY = "default";
+    private ProtocolManager protocolManager = null;
 
-    protected Module() {
-        setup();
+    protected Module(boolean requireProtocolLib) {
+        setup(requireProtocolLib);
     }
 
-    protected Module(HashMap<String, Object> customConfigs) {
-        setup();
+    protected Module(boolean requireProtocolLib, HashMap<String, Object> customConfigs) {
+        setup(requireProtocolLib);
         setCustomConfig(customConfigs);
-        saveConfig();
+        configManager.saveConfig();
     }
 
-    protected Module(HashMap<String, Object> customConfigs, RemovableConfigPaths[] pathsToRemove) {
-        setup();
+    protected Module(boolean requireProtocolLib, HashMap<String, Object> customConfigs, RemovableConfigPaths[] pathsToRemove) {
+        setup(requireProtocolLib);
         removeTemplatedConfig(pathsToRemove);
         setCustomConfig(customConfigs);
-        saveConfig();
+        configManager.saveConfig();
     }
 
-    protected Module(RemovableConfigPaths[] pathsToRemove) {
-        setup();
+    protected Module(boolean requireProtocolLib, RemovableConfigPaths[] pathsToRemove) {
+        setup(requireProtocolLib);
         removeTemplatedConfig(pathsToRemove);
-        saveConfig();
+        configManager.saveConfig();
     }
 
-    private void setup() {
+    private void setup(boolean requireProtocolLib) {
+        this.requireProtocolLib = requireProtocolLib;
+        if (requireProtocolLib) protocolManager = ProtocolLibrary.getProtocolManager();
+
         String name = getClass().getSimpleName();
         name = name.replaceAll("([a-z])([A-Z]+)", "$1-$2").toLowerCase();
         this.name = name;
@@ -66,12 +75,12 @@ public abstract class Module implements Listener {
     }
 
     private void removeTemplatedConfig(RemovableConfigPaths[] pathsToRemove) {
-        Arrays.stream(pathsToRemove).forEach(path -> getConfig().set(path.getPath(), null));
+        Arrays.stream(pathsToRemove).forEach(path -> configManager.getConfig().set(path.getPath(), null));
     }
 
     private void setCustomConfig(HashMap<String, Object> customConfigs) {
         customConfigs.forEach((path, value) -> {
-            if (!getConfig().isSet(path)) getConfig().set(path, value);
+            if (!configManager.getConfig().isSet(path)) configManager.getConfig().set(path, value);
         });
     }
 
@@ -84,20 +93,27 @@ public abstract class Module implements Listener {
     }
 
     protected boolean isMissingPermission(Player player, String permissionKey) {
-        if (!getConfig().getBoolean("require-permission")) return false;
+        if (!configManager.getConfig().getBoolean("require-permission")) return false;
         return !player.hasPermission(permissionNodes.get(permissionKey));
     }
 
     protected boolean isDisabled() {
-        return !getConfig().getBoolean("enabled");
+        return !configManager.getConfig().getBoolean("enabled");
     }
 
-    protected FileConfiguration getConfig() {
-        return configManager.getConfig();
+    public boolean requireProtocolLib() {
+       return requireProtocolLib;
     }
 
-    protected void saveConfig() {
-        configManager.saveConfig();
+    public String getName() {
+        return name;
     }
 
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
+
+    public @Nullable ProtocolManager getProtocolManager() {
+        return protocolManager;
+    }
 }
