@@ -10,8 +10,7 @@ import dev.spimy.qoltweaks.modules.entities.PreventPetDamage;
 import dev.spimy.qoltweaks.modules.entities.petting.Petting;
 import dev.spimy.qoltweaks.modules.farming.HoeHarvest;
 import dev.spimy.qoltweaks.modules.security.HostnameWhitelist;
-import dev.spimy.qoltweaks.modules.security.RestrictPing;
-import org.bukkit.event.Listener;
+import dev.spimy.qoltweaks.modules.security.restrictping.RestrictPing;
 
 public class ModuleLoader {
 
@@ -21,8 +20,14 @@ public class ModuleLoader {
         loadModules();
     }
 
-    private void registerEvent(Listener event) {
-        plugin.getServer().getPluginManager().registerEvents(event, plugin);
+    private void registerEvent(Module module) {
+        if (module.requireProtocolLib()) {
+            if (!plugin.hasProtocolLib()) {
+                plugin.getLogger().warning("Could not enable " + module.getName() + " module as it requires ProtocolLib.");
+                return;
+            }
+        }
+        plugin.getServer().getPluginManager().registerEvents(module, plugin);
     }
 
     private void loadModules() {

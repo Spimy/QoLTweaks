@@ -51,4 +51,8 @@ public final class QoLTweaks extends JavaPlugin {
         return new NamespacedKey(this, key);
     }
 
+    public boolean hasProtocolLib() {
+        return getServer().getPluginManager().getPlugin("ProtocolLib") != null;
+    }
+
 }
