@@ -17,7 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class NametagShear extends Module {
 
     public NametagShear() {
-        super();
+        super(false);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -30,6 +30,7 @@ public class NametagShear extends Module {
         Entity entity = event.getRightClicked();
 
         if (!(entity instanceof LivingEntity)) return;
+        if (item == null) return;
         if (item.getType() != Material.SHEARS) return;
         if (!player.isSneaking()) return;
 
@@ -40,7 +41,7 @@ public class NametagShear extends Module {
         ItemStack nameTag = new ItemStack(Material.NAME_TAG);
         ItemMeta nameTagMeta = nameTag.getItemMeta();
 
-        nameTagMeta.displayName(entity.customName());
+        if (nameTagMeta != null) nameTagMeta.setDisplayName(entity.getCustomName());
         nameTag.setItemMeta(nameTagMeta);
 
         if (event.getHand() == EquipmentSlot.HAND) {
@@ -56,7 +57,7 @@ public class NametagShear extends Module {
             entity.setCustomNameVisible(false);
         }
 
-        entity.customName(null);
+        entity.setCustomName(null);
     }
 
 }

@@ -3,7 +3,6 @@ package dev.spimy.qoltweaks.modules.security;
 import dev.spimy.qoltweaks.QoLTweaks;
 import dev.spimy.qoltweaks.config.RemovableConfigPaths;
 import dev.spimy.qoltweaks.modules.Module;
-import net.kyori.adventure.text.Component;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
@@ -18,6 +17,7 @@ public class HostnameWhitelist extends Module {
 
     public HostnameWhitelist() {
         super(
+            false,
             new HashMap<>() {{
                 put("block-legacy", true);
             }},
@@ -39,7 +39,7 @@ public class HostnameWhitelist extends Module {
         }
 
         if (hostName == null) {
-            if (!getConfig().getBoolean("block-legacy")) return;
+            if (!getConfigManager().getConfig().getBoolean("block-legacy")) return;
         }
 
         Set<String> whitelistedHostnames = new HashSet<>(plugin.getConfig().getStringList("allowed-hostnames"));
@@ -47,7 +47,7 @@ public class HostnameWhitelist extends Module {
 
         event.disallow(
             Result.KICK_OTHER,
-            Component.text(plugin.getMessageManager().getConfigMessage("invalid-hostname", false))
+            plugin.getMessageManager().getConfigMessage("invalid-hostname", false)
         );
     }
 

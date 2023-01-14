@@ -15,16 +15,15 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class BookExtract extends Module {
 
     public BookExtract() {
-        super();
+        super(false);
     }
 
     @EventHandler
     public void onGrindstone(InventoryClickEvent event) {
         if (isDisabled()) return;
 
-        if (!(event.getView().getTopInventory() instanceof GrindstoneInventory)) return;
+        if (!(event.getView().getTopInventory() instanceof GrindstoneInventory inventory)) return;
 
-        GrindstoneInventory inventory = (GrindstoneInventory) event.getView().getTopInventory();
         ItemStack cursor = event.getCursor();
         ItemStack clickedItem = event.getCurrentItem();
         Player player = (Player) event.getWhoClicked();
@@ -64,9 +63,11 @@ public class BookExtract extends Module {
                         ItemStack enchantedBook = new ItemStack(Material.ENCHANTED_BOOK);
                         EnchantmentStorageMeta enchantMeta = (EnchantmentStorageMeta) enchantedBook.getItemMeta();
 
-                        for (Enchantment enchant : extractFrom.getEnchantments().keySet()) {
-                            enchantMeta.addStoredEnchant(enchant, extractFrom.getEnchantmentLevel(enchant), false);
-                            enchantedBook.setItemMeta(enchantMeta);
+                        if (enchantMeta != null) {
+                            for (Enchantment enchant : extractFrom.getEnchantments().keySet()) {
+                                enchantMeta.addStoredEnchant(enchant, extractFrom.getEnchantmentLevel(enchant), false);
+                                enchantedBook.setItemMeta(enchantMeta);
+                            }
                         }
 
                         inventory.setItem(2, enchantedBook);

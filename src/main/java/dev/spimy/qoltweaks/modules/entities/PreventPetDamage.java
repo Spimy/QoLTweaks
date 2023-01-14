@@ -11,26 +11,23 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class PreventPetDamage extends Module {
 
     public PreventPetDamage() {
-        super();
+        super(false);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPetHit(EntityDamageByEntityEvent event) {
         Entity damager = event.getDamager();
-        if (!(damager instanceof Player)) return;
+        if (!(damager instanceof Player player)) return;
 
         Entity victim = event.getEntity();
-        if (!(victim instanceof Tameable)) return;
+        if (!(victim instanceof Tameable pet)) return;
 
         if (isDisabled()) return;
-
-        Tameable pet = (Tameable) victim;
         if (!pet.isTamed()) return;
-
-        Player player = (Player) damager;
         if (isMissingPermission(player)) return;
 
-        if (pet.getOwnerUniqueId() != player.getUniqueId()) return;
+        if (pet.getOwner() == null) return;
+        if (pet.getOwner().getUniqueId() != player.getUniqueId()) return;
         event.setCancelled(true);
     }
 

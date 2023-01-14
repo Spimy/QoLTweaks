@@ -20,6 +20,7 @@ public class HoeHarvest extends Module {
 
     public HoeHarvest() {
         super(
+            false,
             new HashMap<>() {{
                 put("range.wooden", 1);
                 put("range.stone", 1);
@@ -41,20 +42,14 @@ public class HoeHarvest extends Module {
     }
 
     private int getRange(String itemType) {
-        switch (itemType) {
-            case "WOODEN_HOE":
-                return getConfig().getInt("range.wooden");
-            case "STONE_HOE":
-                return getConfig().getInt("range.stone");
-            case "IRON_HOE":
-                return getConfig().getInt("range.iron");
-            case "DIAMOND_HOE":
-                return getConfig().getInt("range.diamond");
-            case "NETHERITE_HOE":
-                return getConfig().getInt("range.netherite");
-            default:
-                return 1;
-        }
+        return switch (itemType) {
+            case "WOODEN_HOE" -> getConfigManager().getConfig().getInt("range.wooden");
+            case "STONE_HOE" -> getConfigManager().getConfig().getInt("range.stone");
+            case "IRON_HOE" -> getConfigManager().getConfig().getInt("range.iron");
+            case "DIAMOND_HOE" -> getConfigManager().getConfig().getInt("range.diamond");
+            case "NETHERITE_HOE" -> getConfigManager().getConfig().getInt("range.netherite");
+            default -> 1;
+        };
     }
 
     @EventHandler
@@ -67,7 +62,7 @@ public class HoeHarvest extends Module {
         if (matchesHarvestable(event.getBlock().getType())) {
             String itemType = item.getType().toString();
             if (!itemType.endsWith("_HOE")) return;
-            if (!player.isSneaking() && getConfig().getBoolean("require-sneaking")) return;
+            if (!player.isSneaking() && getConfigManager().getConfig().getBoolean("require-sneaking")) return;
             if (isDisabled()) return;
             if (isMissingPermission(player)) return;
 
@@ -89,7 +84,7 @@ public class HoeHarvest extends Module {
 
     private void damageItem(int amount, ItemStack item, Player player) {
         ItemMeta meta = item.getItemMeta();
-        if (!(meta instanceof Damageable) || amount < 0) return;
+        if (!(meta instanceof Damageable damageable) || amount < 0) return;
 
         int m = item.getEnchantmentLevel(Enchantment.DURABILITY);
         int k = 0;
@@ -114,13 +109,15 @@ public class HoeHarvest extends Module {
         }
         if (amount <= 0) return;
 
-        Damageable damageable = (Damageable) meta;
         damageable.setDamage(damageable.getDamage() + amount);
         item.setItemMeta(meta);
     }
 
     private boolean matchesHarvestable(Material mat) {
-        return matchString(mat.toString(), getConfig().getStringList("harvestable-materials")) || matchTag(mat, getConfig().getStringList("harvestable-materials"));
+        return matchString(
+            mat.toString(),
+            getConfigManager().getConfig().getStringList("harvestable-materials")) ||
+            matchTag(mat, getConfigManager().getConfig().getStringList("harvestable-materials"));
     }
 
     private boolean matchString(String str, List<String> matcher) {

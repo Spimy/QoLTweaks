@@ -13,6 +13,7 @@ public class TntDropRate extends Module {
 
     public TntDropRate() {
         super(
+            false,
             new HashMap<>() {{
                 put("rate", 1.0f);
             }},
@@ -23,7 +24,7 @@ public class TntDropRate extends Module {
     public void onTNTExplode(EntityExplodeEvent event) {
         if (isDisabled()) return;
         if (event.getEntityType() == EntityType.PRIMED_TNT) {
-            event.setYield((float) getConfig().getDouble("rate"));
+            event.setYield((float) getConfigManager().getConfig().getDouble("rate"));
         }
     }
 

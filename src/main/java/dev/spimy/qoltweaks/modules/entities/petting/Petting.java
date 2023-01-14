@@ -23,6 +23,7 @@ public class Petting extends Module {
 
     public Petting() {
         super(
+            false,
             new HashMap<>() {{
                 put("cooldown.dog", 60);
                 put("cooldown.cat", 60);
@@ -50,12 +51,12 @@ public class Petting extends Module {
         if (entity.getType() == EntityType.WOLF) {
             if (isMissingPermission(player, PET_DOG_PERM_KEY)) return;
             if (!((Wolf) entity).isSitting()) return;
-            cooldownTimer = getConfig().getLong("cooldown.dog", cooldownTimer);
+            cooldownTimer = getConfigManager().getConfig().getLong("cooldown.dog", cooldownTimer);
             petSound = Sound.ENTITY_WOLF_WHINE;
         } else if (entity.getType() == EntityType.CAT) {
             if (isMissingPermission(player, PET_CAT_PERM_KEY)) return;
             if (!((Cat) entity).isSitting()) return;
-            cooldownTimer = getConfig().getLong("cooldown.cat", cooldownTimer);
+            cooldownTimer = getConfigManager().getConfig().getLong("cooldown.cat", cooldownTimer);
             petSound = Sound.ENTITY_CAT_PURREOW;
         } else return;
 
@@ -72,7 +73,7 @@ public class Petting extends Module {
         pettingTimer.setPetTime();
 
 
-        if (getConfig().getBoolean("heal")) {
+        if (getConfigManager().getConfig().getBoolean("heal")) {
             final AttributeInstance petMaxHealth = pet.getAttribute(Attribute.GENERIC_MAX_HEALTH);
             if (petMaxHealth == null) {
                 plugin.getLogger().warning("Unable to heal pet using petting function.");
@@ -87,7 +88,7 @@ public class Petting extends Module {
             }
         }
 
-        if (getConfig().getBoolean("deaggro")) {
+        if (getConfigManager().getConfig().getBoolean("deaggro")) {
             Entity target = pet.getTarget();
             if (target != null) {
                 if (target.getType() == EntityType.PLAYER) {
