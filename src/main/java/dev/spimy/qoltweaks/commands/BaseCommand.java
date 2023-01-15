@@ -47,7 +47,13 @@ public class BaseCommand implements TabExecutor {
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("help")) {
                 StringUtil.copyPartialMatches(args[1], handler.getSubCommandNames(), completions);
-            } else {
+            }
+
+            else if (args[0].equalsIgnoreCase("toggle")) {
+                StringUtil.copyPartialMatches(args[1], plugin.getConfigManagers().keySet(), completions);
+            }
+
+            else {
                 for (int i = 0; i < handler.getSubCommandNames().size(); i++) {
                     if (args[0].equalsIgnoreCase(handler.getSubCommandNames().get(i))) {
                         SubCommand subCommand = handler.getSubCommand(handler.getSubCommandNames().get(i));
