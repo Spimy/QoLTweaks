@@ -4,6 +4,11 @@ lang:
   reloaded: "&aConfigs have been reloaded."
   no-permission: "&cYou do not have the permission required to run this command."
   invalid-hostname: "Unknown host"
+  missing-argument: "&cYou did not provide required arguments."
+  invalid-argument: "&cYou have provided an invalid argument."
+  module:
+    on-enable: "&6{module} &ahas been enabled."
+    on-disable: "&6{module} &chas been disabled."
 
 # Used by restrict-ping and hostname-whitelist
 allowed-hostnames:
