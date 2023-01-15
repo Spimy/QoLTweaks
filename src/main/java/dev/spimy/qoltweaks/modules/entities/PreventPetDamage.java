@@ -10,10 +10,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class PreventPetDamage extends Module {
 
-    public PreventPetDamage() {
-        super(false);
-    }
-
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPetHit(EntityDamageByEntityEvent event) {
         Entity damager = event.getDamager();

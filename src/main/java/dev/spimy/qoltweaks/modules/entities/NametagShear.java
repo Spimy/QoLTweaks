@@ -16,10 +16,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class NametagShear extends Module {
 
-    public NametagShear() {
-        super(false);
-    }
-
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onNameTagShear(PlayerInteractAtEntityEvent event) {
         if (event.isCancelled()) return;

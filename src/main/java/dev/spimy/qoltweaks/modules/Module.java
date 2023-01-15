@@ -1,13 +1,10 @@
 package dev.spimy.qoltweaks.modules;
 
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
 import dev.spimy.qoltweaks.QoLTweaks;
 import dev.spimy.qoltweaks.config.ConfigManager;
 import dev.spimy.qoltweaks.config.RemovableConfigPaths;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,43 +14,37 @@ import java.util.List;
 public abstract class Module implements Listener {
 
     private String name;
-    private boolean requireProtocolLib;
 
     private ConfigManager configManager;
     private final HashMap<String, String> permissionNodes = new HashMap<>();
 
-
     private final QoLTweaks plugin = QoLTweaks.getInstance();
     private final String DEFAULT_PERMISSION_KEY = "default";
-    private ProtocolManager protocolManager = null;
 
-    protected Module(boolean requireProtocolLib) {
-        setup(requireProtocolLib);
+    protected Module() {
+        setup();
     }
 
-    protected Module(boolean requireProtocolLib, HashMap<String, Object> customConfigs) {
-        setup(requireProtocolLib);
+    protected Module(HashMap<String, Object> customConfigs) {
+        setup();
         setCustomConfig(customConfigs);
         configManager.saveConfig();
     }
 
-    protected Module(boolean requireProtocolLib, HashMap<String, Object> customConfigs, RemovableConfigPaths[] pathsToRemove) {
-        setup(requireProtocolLib);
+    protected Module(HashMap<String, Object> customConfigs, RemovableConfigPaths[] pathsToRemove) {
+        setup();
         removeTemplatedConfig(pathsToRemove);
         setCustomConfig(customConfigs);
         configManager.saveConfig();
     }
 
-    protected Module(boolean requireProtocolLib, RemovableConfigPaths[] pathsToRemove) {
-        setup(requireProtocolLib);
+    protected Module(RemovableConfigPaths[] pathsToRemove) {
+        setup();
         removeTemplatedConfig(pathsToRemove);
         configManager.saveConfig();
     }
 
-    private void setup(boolean requireProtocolLib) {
-        this.requireProtocolLib = requireProtocolLib;
-        if (requireProtocolLib) protocolManager = ProtocolLibrary.getProtocolManager();
-
+    private void setup() {
         String name = getClass().getSimpleName();
         name = name.replaceAll("([a-z])([A-Z]+)", "$1-$2").toLowerCase();
         this.name = name;
@@ -101,10 +92,6 @@ public abstract class Module implements Listener {
         return !configManager.getConfig().getBoolean("enabled");
     }
 
-    public boolean requireProtocolLib() {
-       return requireProtocolLib;
-    }
-
     public String getName() {
         return name;
     }
@@ -113,7 +100,4 @@ public abstract class Module implements Listener {
         return configManager;
     }
 
-    public @Nullable ProtocolManager getProtocolManager() {
-        return protocolManager;
-    }
 }

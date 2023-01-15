@@ -14,10 +14,6 @@ import org.bukkit.util.Vector;
 
 public class LadderWarp extends Module {
 
-    public LadderWarp() {
-        super(false);
-    }
-
     @EventHandler
     public void onLadderClick(PlayerInteractEvent event) {
         if (isDisabled()) return;

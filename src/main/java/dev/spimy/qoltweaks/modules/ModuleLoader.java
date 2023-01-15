@@ -18,15 +18,16 @@ public class ModuleLoader {
 
     public ModuleLoader() {
         loadModules();
+
+        if (!plugin.hasProtocolLib()) {
+            plugin.getLogger().warning("Some modules were not loaded as they required ProtocolLib");
+            return;
+        }
+
+        loadProtocolLibModules();
     }
 
     private void registerEvent(Module module) {
-        if (module.requireProtocolLib()) {
-            if (!plugin.hasProtocolLib()) {
-                plugin.getLogger().warning("Could not enable " + module.getName() + " module as it requires ProtocolLib.");
-                return;
-            }
-        }
         plugin.getServer().getPluginManager().registerEvents(module, plugin);
     }
 
@@ -38,9 +39,12 @@ public class ModuleLoader {
         this.registerEvent(new PreventPetDamage());
         this.registerEvent(new HoeHarvest());
         this.registerEvent(new TntDropRate());
-        this.registerEvent(new RestrictPing());
         this.registerEvent(new HostnameWhitelist());
         this.registerEvent(new AntiEndermanGrief());
+    }
+
+    public void loadProtocolLibModules() {
+        this.registerEvent(new RestrictPing());
     }
 
 }

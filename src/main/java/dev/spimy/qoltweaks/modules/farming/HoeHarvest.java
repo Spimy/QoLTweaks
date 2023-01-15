@@ -20,7 +20,6 @@ public class HoeHarvest extends Module {
 
     public HoeHarvest() {
         super(
-            false,
             new HashMap<>() {{
                 put("range.wooden", 1);
                 put("range.stone", 1);

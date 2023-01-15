@@ -16,10 +16,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class BookExtract extends Module {
 
-    public BookExtract() {
-        super(false);
-    }
-
     @EventHandler
     public void onGrindstone(InventoryClickEvent event) {
         if (isDisabled()) return;

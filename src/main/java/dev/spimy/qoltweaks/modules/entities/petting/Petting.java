@@ -23,7 +23,6 @@ public class Petting extends Module {
 
     public Petting() {
         super(
-            false,
             new HashMap<>() {{
                 put("cooldown.dog", 60);
                 put("cooldown.cat", 60);

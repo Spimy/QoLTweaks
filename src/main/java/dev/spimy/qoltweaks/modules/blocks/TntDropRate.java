@@ -13,7 +13,6 @@ public class TntDropRate extends Module {
 
     public TntDropRate() {
         super(
-            false,
             new HashMap<>() {{
                 put("rate", 1.0f);
             }},

@@ -17,7 +17,6 @@ public class HostnameWhitelist extends Module {
 
     public HostnameWhitelist() {
         super(
-            false,
             new HashMap<>() {{
                 put("block-legacy", true);
             }},
