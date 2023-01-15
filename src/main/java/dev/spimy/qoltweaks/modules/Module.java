@@ -92,10 +92,6 @@ public abstract class Module implements Listener {
         return !configManager.getConfig().getBoolean("enabled");
     }
 
-    public String getName() {
-        return name;
-    }
-
     public ConfigManager getConfigManager() {
         return configManager;
     }
