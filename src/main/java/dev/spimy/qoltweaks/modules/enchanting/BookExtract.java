@@ -28,7 +28,7 @@ public class BookExtract extends Module {
         ItemStack clickedItem = event.getCurrentItem();
         Player player = (Player) event.getWhoClicked();
 
-        if (isMissingPermission(player)) return;
+        if (isMissingDefaultPermission(player)) return;
         if (cursor == null) return;
 
         if (event.isShiftClick()) {

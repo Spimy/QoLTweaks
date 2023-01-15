@@ -34,7 +34,7 @@ public class NametagShear extends Module {
         if (item.getType() != Material.SHEARS) return;
         if (!player.isSneaking()) return;
 
-        if (isMissingPermission(player)) return;
+        if (isMissingDefaultPermission(player)) return;
 
         event.setCancelled(true);
 

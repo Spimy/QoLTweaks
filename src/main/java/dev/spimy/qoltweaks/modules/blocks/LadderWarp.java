@@ -30,7 +30,7 @@ public class LadderWarp extends Module {
         if (event.getHand() != EquipmentSlot.HAND) return;
         if (event.getClickedBlock() != null && event.getClickedBlock().getType() != Material.LADDER) return;
 
-        if (isMissingPermission(player)) return;
+        if (isMissingDefaultPermission(player)) return;
 
         Block ladder = event.getClickedBlock();
         Vector face = player.getEyeLocation().getDirection().clone();

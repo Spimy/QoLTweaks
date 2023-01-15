@@ -64,7 +64,7 @@ public class HoeHarvest extends Module {
             if (!itemType.endsWith("_HOE")) return;
             if (!player.isSneaking() && getConfigManager().getConfig().getBoolean("require-sneaking")) return;
             if (isDisabled()) return;
-            if (isMissingPermission(player)) return;
+            if (isMissingDefaultPermission(player)) return;
 
             int range = getRange(itemType);
             for (int x = brokenBlock.getBlockX() - range; x <= brokenBlock.getBlockX() + range; x++) {

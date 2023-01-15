@@ -24,7 +24,7 @@ public class PreventPetDamage extends Module {
 
         if (isDisabled()) return;
         if (!pet.isTamed()) return;
-        if (isMissingPermission(player)) return;
+        if (isMissingDefaultPermission(player)) return;
 
         if (pet.getOwner() == null) return;
         if (pet.getOwner().getUniqueId() != player.getUniqueId()) return;

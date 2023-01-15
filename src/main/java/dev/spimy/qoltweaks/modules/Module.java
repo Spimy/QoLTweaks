@@ -88,11 +88,11 @@ public abstract class Module implements Listener {
         permissionNodes.put(key, String.format("qoltweaks.%s.%s", name, subPermission));
     }
 
-    protected boolean isMissingPermission(Player player) {
-        return isMissingPermission(player, DEFAULT_PERMISSION_KEY);
+    protected boolean isMissingDefaultPermission(Player player) {
+        return isMissingDefaultPermission(player, DEFAULT_PERMISSION_KEY);
     }
 
-    protected boolean isMissingPermission(Player player, String permissionKey) {
+    protected boolean isMissingDefaultPermission(Player player, String permissionKey) {
         if (!configManager.getConfig().getBoolean("require-permission")) return false;
         return !player.hasPermission(permissionNodes.get(permissionKey));
     }
