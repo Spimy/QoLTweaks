@@ -40,7 +40,7 @@ public class Help extends SubCommand {
             return true;
         }
 
-        String command = args[0];
+        String command = args[0].toLowerCase();
         SubCommand subCommand = handler.getSubCommand(command);
 
         if (subCommand == null) {
