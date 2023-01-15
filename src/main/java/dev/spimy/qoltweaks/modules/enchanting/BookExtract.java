@@ -7,7 +7,9 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.GrindstoneInventory;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -36,13 +38,22 @@ public class BookExtract extends Module {
             if (event.getSlot() == 2) return;
             event.setCancelled(true);
 
-            if (event.getSlot() == 1) {
+            Inventory clickedInventory = event.getClickedInventory();
+            if (clickedInventory == null) return;
+
+            if (clickedInventory.getType() == InventoryType.GRINDSTONE) {
                 player.getInventory().addItem(new ItemStack(Material.BOOK));
                 inventory.setItem(1, new ItemStack(Material.AIR));
-            } else {
+
+            } else if (clickedInventory.getType() == InventoryType.PLAYER) {
+                ItemStack item = inventory.getItem(1);
+                if (item != null && item.getType() != Material.AIR) return;
+//                if (item != null) return;
+
                 clickedItem.setAmount(clickedItem.getAmount() - 1);
                 inventory.setItem(1, new ItemStack(Material.BOOK));
-            }
+
+            } else return;
         } else {
             if (event.getSlot() == 1 && cursor.getType() == Material.BOOK && inventory.getItem(1) == null) {
                 event.setCancelled(true);
