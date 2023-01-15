@@ -3,6 +3,7 @@ package dev.spimy.qoltweaks.commands.subcommands;
 import dev.spimy.qoltweaks.QoLTweaks;
 import dev.spimy.qoltweaks.commands.subcommands.commands.Help;
 import dev.spimy.qoltweaks.commands.subcommands.commands.Reload;
+import dev.spimy.qoltweaks.commands.subcommands.commands.Toggle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ public class SubCommandHandler {
     public SubCommandHandler() {
         subCommands.add(new Reload());
         subCommands.add(new Help(this));
+        subCommands.add(new Toggle());
     }
 
     public SubCommand getSubCommand(String command) {
