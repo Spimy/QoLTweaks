@@ -49,12 +49,12 @@ public class Petting extends Module {
         Sound petSound;
 
         if (entity.getType() == EntityType.WOLF) {
-            if (isMissingPermission(player, PET_DOG_PERM_KEY)) return;
+            if (isMissingDefaultPermission(player, PET_DOG_PERM_KEY) || isMissingDefaultPermission(player)) return;
             if (!((Wolf) entity).isSitting()) return;
             cooldownTimer = getConfigManager().getConfig().getLong("cooldown.dog", cooldownTimer);
             petSound = Sound.ENTITY_WOLF_WHINE;
         } else if (entity.getType() == EntityType.CAT) {
-            if (isMissingPermission(player, PET_CAT_PERM_KEY)) return;
+            if (isMissingDefaultPermission(player, PET_CAT_PERM_KEY) || isMissingDefaultPermission(player)) return;
             if (!((Cat) entity).isSitting()) return;
             cooldownTimer = getConfigManager().getConfig().getLong("cooldown.cat", cooldownTimer);
             petSound = Sound.ENTITY_CAT_PURREOW;
