@@ -48,7 +48,6 @@ public class BookExtract extends Module {
             } else if (clickedInventory.getType() == InventoryType.PLAYER) {
                 ItemStack item = inventory.getItem(1);
                 if (item != null && item.getType() != Material.AIR) return;
-//                if (item != null) return;
 
                 clickedItem.setAmount(clickedItem.getAmount() - 1);
                 inventory.setItem(1, new ItemStack(Material.BOOK));
