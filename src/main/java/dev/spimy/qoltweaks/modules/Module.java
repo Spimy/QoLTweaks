@@ -45,12 +45,9 @@ public abstract class Module implements Listener {
     }
 
     private void setup() {
-        String name = getClass().getSimpleName();
-        name = name.replaceAll("([a-z])([A-Z]+)", "$1-$2").toLowerCase();
-        this.name = name;
+        this.name = plugin.getModuleName(getClass().getSimpleName());
 
         String[] splitPackageName = getClass().getPackageName().split("\\.");
-
         List<String> remainingPaths = new ArrayList<>();
         if (splitPackageName.length > 5) {
             remainingPaths = new ArrayList<>(
