@@ -62,4 +62,8 @@ public final class QoLTweaks extends JavaPlugin {
         return getServer().getPluginManager().getPlugin("ProtocolLib") != null;
     }
 
+    public String getModuleName(String name) {
+        return name.replaceAll("([a-z])([A-Z]+)", "$1-$2").toLowerCase();
+    }
+
 }
