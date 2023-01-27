@@ -13,11 +13,18 @@ public class SubCommandHandler {
 
     private final List<SubCommand> subCommands = new ArrayList<>();
 
-
-    public SubCommandHandler() {
+    private SubCommandHandler() {
         subCommands.add(new Reload());
-        subCommands.add(new Help(this));
+        subCommands.add(new Help());
         subCommands.add(new Toggle());
+    }
+
+    private static final class SubCommandHandlerHolder {
+        private static final SubCommandHandler subCommandHandler = new SubCommandHandler();
+    }
+
+    public static SubCommandHandler getInstance() {
+        return SubCommandHandlerHolder.subCommandHandler;
     }
 
     public SubCommand getSubCommand(String command) {
