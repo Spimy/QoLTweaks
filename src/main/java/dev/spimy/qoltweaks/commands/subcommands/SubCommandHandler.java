@@ -1,10 +1,9 @@
 package dev.spimy.qoltweaks.commands.subcommands;
 
 import dev.spimy.qoltweaks.QoLTweaks;
-import dev.spimy.qoltweaks.commands.subcommands.commands.Help;
-import dev.spimy.qoltweaks.commands.subcommands.commands.Reload;
-import dev.spimy.qoltweaks.commands.subcommands.commands.Toggle;
+import org.reflections.Reflections;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,9 +13,16 @@ public class SubCommandHandler {
     private final List<SubCommand> subCommands = new ArrayList<>();
 
     private SubCommandHandler() {
-        subCommands.add(new Reload());
-        subCommands.add(new Help());
-        subCommands.add(new Toggle());
+        String packageName = getClass().getPackageName();
+
+        for (Class<? extends SubCommand> subCommand : new Reflections(packageName + ".commands").getSubTypesOf(SubCommand.class)) {
+            try {
+                subCommands.add(subCommand.getDeclaredConstructor().newInstance());
+            } catch (InstantiationException | NoSuchMethodException | InvocationTargetException |
+                     IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private static final class SubCommandHandlerHolder {
