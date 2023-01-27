@@ -23,7 +23,7 @@ public class UpdateChecker {
     }
 
     public void check(Consumer<String> consumer) {
-        Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             try {
                 InputStream inputStream = new URL(spigotApi + pluginId).openStream();
                 Scanner scanner = new Scanner(inputStream);
