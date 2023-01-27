@@ -20,7 +20,7 @@ public class ModuleLoader {
         loadModules();
 
         if (!plugin.hasProtocolLib()) {
-            plugin.getLogger().warning("Some modules were not loaded as they required ProtocolLib");
+            plugin.getLogger().warning("Some modules were not loaded as they required ProtocolLib.");
             return;
         }
 
