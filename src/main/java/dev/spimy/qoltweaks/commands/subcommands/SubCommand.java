@@ -11,18 +11,21 @@ public abstract class SubCommand {
 
     private final String name;
     private final String description;
+    private final boolean requirePermission;
     private final String permissionNode;
     private HashMap<String, String> arguments = new HashMap<>();
 
-    public SubCommand(String name, String description) {
+    public SubCommand(String name, String description, boolean requirePermission) {
         this.name = name;
         this.description = description;
+        this.requirePermission = requirePermission;
         permissionNode = String.format("qoltweaks.command.%s", name);
     }
 
-    public SubCommand(String name, String description, HashMap<String, String> arguments) {
+    public SubCommand(String name, String description, boolean requirePermission, HashMap<String, String> arguments) {
         this.name = name;
         this.description = description;
+        this.requirePermission = requirePermission;
         permissionNode = String.format("qoltweaks.command.%s", name);
         this.arguments = arguments;
     }
@@ -53,6 +56,10 @@ public abstract class SubCommand {
 
     public boolean isMissingPermission(CommandSender sender) {
         return !sender.hasPermission(permissionNode);
+    }
+
+    public boolean isRequirePermission() {
+        return requirePermission;
     }
 
 }

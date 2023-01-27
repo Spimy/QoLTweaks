@@ -18,7 +18,7 @@ import java.util.List;
 public class BaseCommand implements TabExecutor {
 
     private final QoLTweaks plugin = QoLTweaks.getInstance();
-    private final SubCommandHandler handler = new SubCommandHandler();
+    private final SubCommandHandler handler = SubCommandHandler.getInstance();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
@@ -30,6 +30,13 @@ public class BaseCommand implements TabExecutor {
         if (subCommand == null) {
             sender.sendMessage(plugin.getMessageManager().getConfigMessage("not-exist", true));
             return true;
+        }
+
+        if (subCommand.isRequirePermission()) {
+            if (subCommand.isMissingPermission(sender)) {
+                sender.sendMessage(plugin.getMessageManager().getConfigMessage("no-permission", true));
+                return true;
+            }
         }
 
         return subCommand.execute(
