@@ -15,6 +15,7 @@ public class Toggle extends SubCommand {
         super(
             "toggle",
             "Enable or disable a module.",
+            true,
             new HashMap<>() {{
                 put("<module>", "Module to enable or disable.");
             }}
@@ -22,11 +23,6 @@ public class Toggle extends SubCommand {
     }
     @Override
     public boolean execute(CommandSender sender, String[] args) {
-        if (isMissingPermission(sender)) {
-            sender.sendMessage(plugin.getMessageManager().getConfigMessage("no-permission", true));
-            return true;
-        }
-
         if (args.length == 0) {
             sender.sendMessage(plugin.getMessageManager().getConfigMessage("missing-argument", true));
             return true;
