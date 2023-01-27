@@ -13,17 +13,16 @@ import java.util.Map;
 public class Help extends SubCommand {
 
     private final QoLTweaks plugin = QoLTweaks.getInstance();
-    private final SubCommandHandler handler;
 
-    public Help(SubCommandHandler handler) {
+    public Help() {
         super(
             "help",
             "View list of commands.",
+            false,
             new HashMap<>() {{
                 put("[command]", "View detailed help for the command provided.");
             }}
         );
-        this.handler = handler;
     }
 
     @Override
@@ -33,7 +32,7 @@ public class Help extends SubCommand {
                 plugin.getMessageManager().formatMessage(
                     String.format(
                         "&7-= &6QoLTweaks &7=-\n%s",
-                        String.join("\n", handler.getCommandList())
+                        String.join("\n", SubCommandHandler.getInstance().getCommandList())
                     )
                 )
             );
@@ -41,6 +40,7 @@ public class Help extends SubCommand {
         }
 
         String command = args[0].toLowerCase();
+        SubCommandHandler handler = SubCommandHandler.getInstance();
         SubCommand subCommand = handler.getSubCommand(command);
 
         if (subCommand == null) {
