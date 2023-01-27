@@ -1,50 +1,38 @@
 package dev.spimy.qoltweaks.modules;
 
 import dev.spimy.qoltweaks.QoLTweaks;
-import dev.spimy.qoltweaks.modules.blocks.LadderWarp;
-import dev.spimy.qoltweaks.modules.blocks.TntDropRate;
-import dev.spimy.qoltweaks.modules.enchanting.BookExtract;
-import dev.spimy.qoltweaks.modules.entities.AntiEndermanGrief;
-import dev.spimy.qoltweaks.modules.entities.NametagShear;
-import dev.spimy.qoltweaks.modules.entities.PreventPetDamage;
-import dev.spimy.qoltweaks.modules.entities.petting.Petting;
-import dev.spimy.qoltweaks.modules.farming.HoeHarvest;
-import dev.spimy.qoltweaks.modules.security.HostnameWhitelist;
-import dev.spimy.qoltweaks.modules.security.restrictping.RestrictPing;
+import org.reflections.Reflections;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class ModuleLoader {
 
     private final QoLTweaks plugin = QoLTweaks.getInstance();
 
     public ModuleLoader() {
-        loadModules();
+        String packageName = getClass().getPackageName();
 
-        if (!plugin.hasProtocolLib()) {
-            plugin.getLogger().warning("Some modules were not loaded as they required ProtocolLib.");
-            return;
+        for (Class<?> module : new Reflections(packageName).getSubTypesOf(Module.class)) {
+            RequireProtocolLib annotation = module.getAnnotation(RequireProtocolLib.class);
+            if (annotation != null && !plugin.hasProtocolLib()) {
+                String moduleName = plugin.getModuleName(module.getSimpleName());
+                plugin.getLogger().warning(
+                    moduleName + " module could not be loaded as it requires ProtocolLib."
+                );
+                continue;
+            }
+
+            try {
+                registerEvent((Module) module.getDeclaredConstructor().newInstance());
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                     NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
         }
-
-        loadProtocolLibModules();
     }
 
     private void registerEvent(Module module) {
         plugin.getServer().getPluginManager().registerEvents(module, plugin);
-    }
-
-    private void loadModules() {
-        this.registerEvent(new LadderWarp());
-        this.registerEvent(new BookExtract());
-        this.registerEvent(new NametagShear());
-        this.registerEvent(new Petting());
-        this.registerEvent(new PreventPetDamage());
-        this.registerEvent(new HoeHarvest());
-        this.registerEvent(new TntDropRate());
-        this.registerEvent(new HostnameWhitelist());
-        this.registerEvent(new AntiEndermanGrief());
-    }
-
-    public void loadProtocolLibModules() {
-        this.registerEvent(new RestrictPing());
     }
 
 }
