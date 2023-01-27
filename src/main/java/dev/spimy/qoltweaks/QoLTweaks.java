@@ -28,6 +28,13 @@ public final class QoLTweaks extends JavaPlugin {
         new ModuleLoader();
 
         getLogger().info("QoLTweaks enabled.");
+
+        UpdateChecker updateChecker = new UpdateChecker(107387);
+        updateChecker.check(version -> {
+           if (!updateChecker.getCurrentVersion().equalsIgnoreCase(version)) {
+               getLogger().warning("A new version v" + version + " is available.");
+           }
+        });
     }
 
     @Override
