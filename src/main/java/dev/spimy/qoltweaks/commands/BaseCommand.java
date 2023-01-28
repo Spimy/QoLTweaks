@@ -26,7 +26,7 @@ public class BaseCommand implements TabExecutor {
             return handler.getSubCommand("help").execute(sender, args);
         }
 
-        SubCommand subCommand = handler.getSubCommand(args[0]);
+        SubCommand subCommand = handler.getSubCommand(args[0].toLowerCase());
         if (subCommand == null) {
             sender.sendMessage(plugin.getMessageManager().getConfigMessage("not-exist", true));
             return true;
