@@ -15,7 +15,7 @@ public class SubCommandHandler {
     private SubCommandHandler() {
         String packageName = getClass().getPackageName();
 
-        for (Class<? extends SubCommand> subCommand : new Reflections(packageName + ".commands").getSubTypesOf(SubCommand.class)) {
+        for (Class<? extends SubCommand> subCommand : new Reflections(packageName).getSubTypesOf(SubCommand.class)) {
             try {
                 subCommands.add(subCommand.getDeclaredConstructor().newInstance());
             } catch (InstantiationException | NoSuchMethodException | InvocationTargetException |
