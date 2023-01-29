@@ -11,11 +11,10 @@ import java.util.function.Consumer;
 public class UpdateChecker {
 
     private final QoLTweaks plugin = QoLTweaks.getInstance();
-    private final String spigotApi = "https://api.spigotmc.org/legacy/update.php?resource=";
-    private final int pluginId;
+    private final String spigotApi;
 
     public UpdateChecker(int pluginId) {
-        this.pluginId = pluginId;
+        this.spigotApi = "https://api.spigotmc.org/legacy/update.php?resource=" + pluginId;
     }
 
     public String getCurrentVersion() {
@@ -25,7 +24,7 @@ public class UpdateChecker {
     public void check(Consumer<String> consumer) {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             try {
-                InputStream inputStream = new URL(spigotApi + pluginId).openStream();
+                InputStream inputStream = new URL(spigotApi).openStream();
                 Scanner scanner = new Scanner(inputStream);
 
                 if (scanner.hasNext()) {
