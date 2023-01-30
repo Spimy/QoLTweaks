@@ -4,6 +4,7 @@ import dev.spimy.qoltweaks.QoLTweaks;
 import dev.spimy.qoltweaks.commands.subcommands.SubCommand;
 import dev.spimy.qoltweaks.config.ConfigManager;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
 public class Reload extends SubCommand {
@@ -13,7 +14,7 @@ public class Reload extends SubCommand {
     }
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(@NotNull final CommandSender sender, final String[] args) {
         final QoLTweaks plugin = QoLTweaks.getInstance();
 
         plugin.reloadConfig();

@@ -13,7 +13,7 @@ public class UpdateChecker {
     private final QoLTweaks plugin = QoLTweaks.getInstance();
     private final String spigotApi;
 
-    public UpdateChecker(int pluginId) {
+    public UpdateChecker(final int pluginId) {
         this.spigotApi = "https://api.spigotmc.org/legacy/update.php?resource=" + pluginId;
     }
 
@@ -21,11 +21,11 @@ public class UpdateChecker {
         return plugin.getDescription().getVersion();
     }
 
-    public void check(Consumer<String> consumer) {
+    public void check(final Consumer<String> consumer) {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             try {
-                InputStream inputStream = new URL(spigotApi).openStream();
-                Scanner scanner = new Scanner(inputStream);
+                final InputStream inputStream = new URL(spigotApi).openStream();
+                final Scanner scanner = new Scanner(inputStream);
 
                 if (scanner.hasNext()) {
                     consumer.accept(scanner.next());

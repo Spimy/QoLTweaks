@@ -19,7 +19,7 @@ public class ConfigManager {
     private final String filePath;
     private final QoLTweaks plugin = QoLTweaks.getInstance();
 
-    public ConfigManager(String fileName, String moduleType, List<String> remainingPaths) {
+    public ConfigManager(final String fileName, final String moduleType, final List<String> remainingPaths) {
         this.fileName = fileName.endsWith(".yml") ? fileName : fileName + ".yml";
 
         remainingPaths.add(0, moduleType);
@@ -63,10 +63,10 @@ public class ConfigManager {
             return;
         }
 
-        InputStream template = plugin.getResource("template.yml");
+        final InputStream template = plugin.getResource("template.yml");
         if (template == null) return;
 
-        YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(template));
+        final YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(template));
         try {
             defaultConfig.save(configFile);
         } catch (IOException e) {

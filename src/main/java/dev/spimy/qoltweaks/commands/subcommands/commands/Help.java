@@ -5,6 +5,7 @@ import dev.spimy.qoltweaks.commands.subcommands.ArgumentInfo;
 import dev.spimy.qoltweaks.commands.subcommands.SubCommand;
 import dev.spimy.qoltweaks.commands.subcommands.SubCommandHandler;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -27,7 +28,7 @@ public class Help extends SubCommand {
     }
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(@NotNull final CommandSender sender, final String[] args) {
         final QoLTweaks plugin = QoLTweaks.getInstance();
         final SubCommandHandler handler = SubCommandHandler.getInstance();
         final String commandName = plugin.getClass().getSimpleName().toLowerCase();

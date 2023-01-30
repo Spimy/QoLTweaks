@@ -17,13 +17,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class NametagShear extends Module {
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onNameTagShear(PlayerInteractAtEntityEvent event) {
+    public void onNameTagShear(final PlayerInteractAtEntityEvent event) {
         if (event.isCancelled()) return;
         if (isDisabled()) return;
 
-        Player player = event.getPlayer();
-        ItemStack item = player.getInventory().getItem(event.getHand());
-        Entity entity = event.getRightClicked();
+        final Player player = event.getPlayer();
+        final ItemStack item = player.getInventory().getItem(event.getHand());
+        final Entity entity = event.getRightClicked();
 
         if (!(entity instanceof LivingEntity)) return;
         if (item == null) return;
@@ -34,8 +34,8 @@ public class NametagShear extends Module {
 
         event.setCancelled(true);
 
-        ItemStack nameTag = new ItemStack(Material.NAME_TAG);
-        ItemMeta nameTagMeta = nameTag.getItemMeta();
+        final ItemStack nameTag = new ItemStack(Material.NAME_TAG);
+        final ItemMeta nameTagMeta = nameTag.getItemMeta();
 
         if (nameTagMeta != null) nameTagMeta.setDisplayName(entity.getCustomName());
         nameTag.setItemMeta(nameTagMeta);

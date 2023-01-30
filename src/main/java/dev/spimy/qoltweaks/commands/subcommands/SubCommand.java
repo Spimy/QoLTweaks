@@ -1,6 +1,7 @@
 package dev.spimy.qoltweaks.commands.subcommands;
 
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 
 public abstract class SubCommand {
@@ -11,7 +12,7 @@ public abstract class SubCommand {
     private final String permissionNode;
     private final ArgumentInfo argumentInfo;
 
-    public SubCommand(String name, String description, boolean requirePermission) {
+    public SubCommand(final String name, final String description, final boolean requirePermission) {
         this.name = name;
         this.description = description;
         this.requirePermission = requirePermission;
@@ -19,7 +20,7 @@ public abstract class SubCommand {
         this.argumentInfo = null;
     }
 
-    public SubCommand(String name, String description, boolean requirePermission, ArgumentInfo argumentInfo) {
+    public SubCommand(final String name, final String description, final boolean requirePermission, final ArgumentInfo argumentInfo) {
         this.name = name;
         this.description = description;
         this.requirePermission = requirePermission;
@@ -27,7 +28,7 @@ public abstract class SubCommand {
         this.argumentInfo = argumentInfo;
     }
 
-    public abstract void execute(CommandSender sender, String[] args);
+    public abstract void execute(@NotNull final CommandSender sender, @NotNull final String[] args);
 
     public String getName() {
         return name;
@@ -45,7 +46,7 @@ public abstract class SubCommand {
         return argumentInfo;
     }
 
-    public boolean isMissingPermission(CommandSender sender) {
+    public boolean isMissingPermission(final CommandSender sender) {
         return !sender.hasPermission(permissionNode);
     }
 

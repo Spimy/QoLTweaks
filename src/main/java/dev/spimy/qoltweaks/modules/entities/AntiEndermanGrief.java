@@ -18,7 +18,7 @@ public class AntiEndermanGrief extends Module {
     }
 
     @EventHandler
-    public void onEntityChangeBlock(EntityChangeBlockEvent event) {
+    public void onEntityChangeBlock(final EntityChangeBlockEvent event) {
         if (event.getEntity().getType() != EntityType.ENDERMAN) return;
         if (isDisabled()) return;
         event.setCancelled(true);

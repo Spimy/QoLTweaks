@@ -25,20 +25,20 @@ public abstract class Module implements Listener {
         setup();
     }
 
-    protected Module(HashMap<String, Object> customConfigs) {
+    protected Module(final HashMap<String, Object> customConfigs) {
         setup();
         setCustomConfig(customConfigs);
         configManager.saveConfig();
     }
 
-    protected Module(HashMap<String, Object> customConfigs, RemovableConfigPaths[] pathsToRemove) {
+    protected Module(final HashMap<String, Object> customConfigs, final RemovableConfigPaths[] pathsToRemove) {
         setup();
         removeTemplatedConfig(pathsToRemove);
         setCustomConfig(customConfigs);
         configManager.saveConfig();
     }
 
-    protected Module(RemovableConfigPaths[] pathsToRemove) {
+    protected Module(final RemovableConfigPaths[] pathsToRemove) {
         setup();
         removeTemplatedConfig(pathsToRemove);
         configManager.saveConfig();
@@ -47,15 +47,15 @@ public abstract class Module implements Listener {
     private void setup() {
         this.name = plugin.getModuleName(getClass().getSimpleName());
 
-        String[] splitPackageName = getClass().getPackageName().split("\\.");
         List<String> remainingPaths = new ArrayList<>();
+        final String[] splitPackageName = getClass().getPackageName().split("\\.");
         if (splitPackageName.length > 5) {
             remainingPaths = new ArrayList<>(
                 Arrays.asList(splitPackageName)
             ).subList(5, splitPackageName.length - 1);
         }
 
-        String moduleType = splitPackageName[4];
+        final String moduleType = splitPackageName[4];
         this.configManager = new ConfigManager(name, moduleType, remainingPaths);
 
         permissionNodes.put(DEFAULT_PERMISSION_KEY, String.format("qoltweaks.%s", name));

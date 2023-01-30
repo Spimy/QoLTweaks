@@ -41,7 +41,7 @@ public class HoeHarvest extends Module {
         );
     }
 
-    private int getRange(String itemType) {
+    private int getRange(final String itemType) {
         return switch (itemType) {
             case "WOODEN_HOE" -> getConfigManager().getConfig().getInt("range.wooden");
             case "STONE_HOE" -> getConfigManager().getConfig().getInt("range.stone");
@@ -53,24 +53,24 @@ public class HoeHarvest extends Module {
     }
 
     @EventHandler
-    public void onHarvest(BlockBreakEvent event) {
-        Player player = event.getPlayer();
+    public void onHarvest(final BlockBreakEvent event) {
+        final Player player = event.getPlayer();
 
-        ItemStack item = player.getInventory().getItemInMainHand();
-        Location brokenBlock = event.getBlock().getLocation();
+        final ItemStack item = player.getInventory().getItemInMainHand();
+        final Location brokenBlock = event.getBlock().getLocation();
 
         if (matchesHarvestable(event.getBlock().getType())) {
-            String itemType = item.getType().toString();
+            final String itemType = item.getType().toString();
             if (!itemType.endsWith("_HOE")) return;
             if (!player.isSneaking() && getConfigManager().getConfig().getBoolean("require-sneaking")) return;
             if (isDisabled()) return;
             if (isMissingDefaultPermission(player)) return;
 
-            int range = getRange(itemType);
+            final int range = getRange(itemType);
             for (int x = brokenBlock.getBlockX() - range; x <= brokenBlock.getBlockX() + range; x++) {
                 for (int z = brokenBlock.getBlockZ() - range; z <= brokenBlock.getBlockZ() + range; z++) {
-                    Location location = new Location(brokenBlock.getWorld(), x, brokenBlock.getBlockY(), z);
-                    Material blockType = location.getBlock().getType();
+                    final Location location = new Location(brokenBlock.getWorld(), x, brokenBlock.getBlockY(), z);
+                    final Material blockType = location.getBlock().getType();
 
                     if (matchesHarvestable(blockType)) {
                         location.getBlock().breakNaturally(item);
@@ -82,14 +82,14 @@ public class HoeHarvest extends Module {
         }
     }
 
-    private void damageItem(int amount, ItemStack item, Player player) {
+    private void damageItem(int amount, final ItemStack item, final Player player) {
         ItemMeta meta = item.getItemMeta();
         if (!(meta instanceof Damageable damageable) || amount < 0) return;
 
-        int m = item.getEnchantmentLevel(Enchantment.DURABILITY);
+        final int m = item.getEnchantmentLevel(Enchantment.DURABILITY);
         int k = 0;
 
-        Random random = new Random();
+        final Random random = new Random();
         for (int l = 0; m > 0 && l < amount; l++) {
             if (random.nextInt(m + 1) > 0) {
                 k++;
@@ -98,7 +98,7 @@ public class HoeHarvest extends Module {
         amount -= k;
 
         if (player != null) {
-            PlayerItemDamageEvent damageEvent = new PlayerItemDamageEvent(player, item, amount);
+            final PlayerItemDamageEvent damageEvent = new PlayerItemDamageEvent(player, item, amount);
             QoLTweaks.getInstance().getServer().getPluginManager().callEvent(damageEvent);
 
             if (amount != damageEvent.getDamage() || damageEvent.isCancelled()) {
@@ -113,7 +113,7 @@ public class HoeHarvest extends Module {
         item.setItemMeta(meta);
     }
 
-    private boolean matchesHarvestable(Material mat) {
+    private boolean matchesHarvestable(final Material mat) {
         return matchString(
             mat.toString(),
             getConfigManager().getConfig().getStringList("harvestable-materials")) ||

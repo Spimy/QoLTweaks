@@ -21,7 +21,7 @@ public class TntDropRate extends Module {
     }
 
     @EventHandler
-    public void onTNTExplode(EntityExplodeEvent event) {
+    public void onTNTExplode(final EntityExplodeEvent event) {
         if (isDisabled()) return;
         if (event.getEntityType() == EntityType.PRIMED_TNT) {
             event.setYield((float) getConfigManager().getConfig().getDouble("rate"));

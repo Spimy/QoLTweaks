@@ -17,14 +17,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class BookExtract extends Module {
 
     @EventHandler
-    public void onGrindstone(InventoryClickEvent event) {
+    public void onGrindstone(final InventoryClickEvent event) {
         if (isDisabled()) return;
-
         if (!(event.getView().getTopInventory() instanceof GrindstoneInventory inventory)) return;
 
-        ItemStack cursor = event.getCursor();
-        ItemStack clickedItem = event.getCurrentItem();
-        Player player = (Player) event.getWhoClicked();
+        final ItemStack cursor = event.getCursor();
+        final ItemStack clickedItem = event.getCurrentItem();
+        final Player player = (Player) event.getWhoClicked();
 
         if (isMissingDefaultPermission(player)) return;
         if (cursor == null) return;
@@ -34,7 +33,7 @@ public class BookExtract extends Module {
             if (event.getSlot() == 2) return;
             event.setCancelled(true);
 
-            Inventory clickedInventory = event.getClickedInventory();
+            final Inventory clickedInventory = event.getClickedInventory();
             if (clickedInventory == null) return;
 
             if (clickedInventory.getType() == InventoryType.GRINDSTONE) {
@@ -42,7 +41,7 @@ public class BookExtract extends Module {
                 inventory.setItem(1, new ItemStack(Material.AIR));
 
             } else if (clickedInventory.getType() == InventoryType.PLAYER) {
-                ItemStack item = inventory.getItem(1);
+                final ItemStack item = inventory.getItem(1);
                 if (item != null && item.getType() != Material.AIR) return;
 
                 clickedItem.setAmount(clickedItem.getAmount() - 1);
@@ -60,17 +59,17 @@ public class BookExtract extends Module {
         new BukkitRunnable() {
             @Override
             public void run() {
-                ItemStack extractFrom = inventory.getItem(0);
-                ItemStack book = inventory.getItem(1);
-                ItemStack extractedEnchants = inventory.getItem(2);
+                final ItemStack extractFrom = inventory.getItem(0);
+                final ItemStack book = inventory.getItem(1);
+                final ItemStack extractedEnchants = inventory.getItem(2);
 
                 if (extractFrom != null && book != null && extractedEnchants == null) {
                     if (book.getType() == Material.BOOK && book.getAmount() == 1 && !extractFrom.getEnchantments().isEmpty() && extractFrom.getType() != Material.ENCHANTED_BOOK) {
-                        ItemStack enchantedBook = new ItemStack(Material.ENCHANTED_BOOK);
-                        EnchantmentStorageMeta enchantMeta = (EnchantmentStorageMeta) enchantedBook.getItemMeta();
+                        final ItemStack enchantedBook = new ItemStack(Material.ENCHANTED_BOOK);
+                        final EnchantmentStorageMeta enchantMeta = (EnchantmentStorageMeta) enchantedBook.getItemMeta();
 
                         if (enchantMeta != null) {
-                            for (Enchantment enchant : extractFrom.getEnchantments().keySet()) {
+                            for (final Enchantment enchant : extractFrom.getEnchantments().keySet()) {
                                 enchantMeta.addStoredEnchant(enchant, extractFrom.getEnchantmentLevel(enchant), false);
                                 enchantedBook.setItemMeta(enchantMeta);
                             }
