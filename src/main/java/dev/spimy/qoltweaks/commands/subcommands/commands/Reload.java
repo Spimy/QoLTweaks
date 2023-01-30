@@ -13,14 +13,13 @@ public class Reload extends SubCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String[] args) {
         final QoLTweaks plugin = QoLTweaks.getInstance();
 
         plugin.reloadConfig();
         plugin.getConfigManagers().values().forEach(ConfigManager::reloadConfig);
 
         sender.sendMessage(plugin.getMessageManager().getConfigMessage("reloaded", true));
-        return true;
     }
 
 }

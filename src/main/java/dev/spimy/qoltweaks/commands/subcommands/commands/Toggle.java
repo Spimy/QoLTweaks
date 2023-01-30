@@ -23,12 +23,12 @@ public class Toggle extends SubCommand {
         );
     }
     @Override
-    public boolean execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String[] args) {
         final QoLTweaks plugin = QoLTweaks.getInstance();
 
         if (args.length == 0) {
             sender.sendMessage(plugin.getMessageManager().getConfigMessage("missing-argument", true));
-            return true;
+            return;
         }
 
         final String moduleName = args[0].toLowerCase();
@@ -36,7 +36,7 @@ public class Toggle extends SubCommand {
 
         if (configManager == null) {
             sender.sendMessage(plugin.getMessageManager().getConfigMessage("invalid-argument", true));
-            return true;
+            return;
         }
 
         final boolean toggle = !configManager.getConfig().getBoolean("enabled");
@@ -48,6 +48,5 @@ public class Toggle extends SubCommand {
             plugin.getMessageManager().getConfigMessage(messagePath, true)
                 .replaceAll("\\{\\bmodule\\b}", moduleName)
         );
-        return true;
     }
 }

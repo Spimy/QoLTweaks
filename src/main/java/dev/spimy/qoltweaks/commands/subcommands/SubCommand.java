@@ -27,7 +27,7 @@ public abstract class SubCommand {
         this.argumentInfo = argumentInfo;
     }
 
-    public abstract boolean execute(CommandSender sender, String[] args);
+    public abstract void execute(CommandSender sender, String[] args);
 
     public String getName() {
         return name;

@@ -23,7 +23,8 @@ public class BaseCommand implements TabExecutor {
         final SubCommandHandler handler = SubCommandHandler.getInstance();
 
         if (args.length == 0) {
-            return handler.getSubCommand("help").execute(sender, args);
+            handler.getSubCommand("help").execute(sender, args);
+            return true;
         }
 
         SubCommand subCommand = handler.getSubCommand(args[0].toLowerCase());
@@ -39,10 +40,12 @@ public class BaseCommand implements TabExecutor {
             }
         }
 
-        return subCommand.execute(
+        subCommand.execute(
             sender,
             Arrays.copyOfRange(args, 1, args.length)
         );
+
+        return true;
     }
 
     @Override

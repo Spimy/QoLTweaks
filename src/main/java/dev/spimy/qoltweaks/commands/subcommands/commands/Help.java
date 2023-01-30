@@ -27,7 +27,7 @@ public class Help extends SubCommand {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String[] args) {
         final QoLTweaks plugin = QoLTweaks.getInstance();
         final SubCommandHandler handler = SubCommandHandler.getInstance();
         final String commandName = plugin.getClass().getSimpleName().toLowerCase();
@@ -41,14 +41,14 @@ public class Help extends SubCommand {
                     )
                 )
             );
-            return true;
+            return;
         }
 
         final SubCommand subCommand = handler.getSubCommand(args[0].toLowerCase());
 
         if (subCommand == null) {
             sender.sendMessage(plugin.getMessageManager().getConfigMessage("not-exist", true));
-            return true;
+            return;
         }
 
         sender.sendMessage(
@@ -61,8 +61,6 @@ public class Help extends SubCommand {
                 )
             )
         );
-
-        return true;
     }
 
     private ArrayList<String> getCommandList(String commandName, SubCommandHandler handler) {
