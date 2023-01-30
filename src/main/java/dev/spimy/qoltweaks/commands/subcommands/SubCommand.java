@@ -2,10 +2,6 @@ package dev.spimy.qoltweaks.commands.subcommands;
 
 import org.bukkit.command.CommandSender;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public abstract class SubCommand {
 
@@ -13,21 +9,22 @@ public abstract class SubCommand {
     private final String description;
     private final boolean requirePermission;
     private final String permissionNode;
-    private HashMap<String, String> arguments = new HashMap<>();
+    private final ArgumentInfo argumentInfo;
 
     public SubCommand(String name, String description, boolean requirePermission) {
         this.name = name;
         this.description = description;
         this.requirePermission = requirePermission;
-        permissionNode = String.format("qoltweaks.command.%s", name);
+        this.permissionNode = String.format("qoltweaks.command.%s", name);
+        this.argumentInfo = null;
     }
 
-    public SubCommand(String name, String description, boolean requirePermission, HashMap<String, String> arguments) {
+    public SubCommand(String name, String description, boolean requirePermission, ArgumentInfo argumentInfo) {
         this.name = name;
         this.description = description;
         this.requirePermission = requirePermission;
-        permissionNode = String.format("qoltweaks.command.%s", name);
-        this.arguments = arguments;
+        this.permissionNode = String.format("qoltweaks.command.%s", name);
+        this.argumentInfo = argumentInfo;
     }
 
     public abstract boolean execute(CommandSender sender, String[] args);
@@ -40,18 +37,12 @@ public abstract class SubCommand {
         return description;
     }
 
-    public HashMap<String, String> getArguments() {
-        return arguments;
+    public boolean hasArguments() {
+        return argumentInfo != null;
     }
 
-    public List<String> getStrippedArguments() {
-        final List<String> strippedArguments = new ArrayList<>();
-
-        for (Map.Entry<String, String> entry : arguments.entrySet()) {
-            strippedArguments.add(entry.getKey().replaceAll("[\\[|\\]|<>]", ""));
-        }
-
-        return strippedArguments;
+    public ArgumentInfo getArgumentInfo() {
+        return argumentInfo;
     }
 
     public boolean isMissingPermission(CommandSender sender) {
