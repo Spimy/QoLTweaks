@@ -14,8 +14,6 @@ import java.util.Set;
 @SuppressWarnings("unused")
 public class HostnameWhitelist extends Module {
 
-    private final QoLTweaks plugin = QoLTweaks.getInstance();
-
     public HostnameWhitelist() {
         super(
             new HashMap<>() {{
@@ -42,6 +40,7 @@ public class HostnameWhitelist extends Module {
             if (!getConfigManager().getConfig().getBoolean("block-legacy")) return;
         }
 
+        final QoLTweaks plugin = QoLTweaks.getInstance();
         Set<String> whitelistedHostnames = new HashSet<>(plugin.getConfig().getStringList("allowed-hostnames"));
         if (whitelistedHostnames.contains(hostName)) return;
 

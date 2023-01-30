@@ -20,7 +20,6 @@ public class Petting extends Module {
 
     private final String PET_DOG_PERM_KEY = "dog";
     private final String PET_CAT_PERM_KEY = "cat";
-    private final QoLTweaks plugin = QoLTweaks.getInstance();
 
     public Petting() {
         super(
@@ -60,6 +59,7 @@ public class Petting extends Module {
             petSound = Sound.ENTITY_CAT_PURREOW;
         } else return;
 
+        final QoLTweaks plugin = QoLTweaks.getInstance();
         Tameable pet = (Tameable) entity;
         PettingTimer pettingTimer = new PettingTimer(plugin, pet);
 
