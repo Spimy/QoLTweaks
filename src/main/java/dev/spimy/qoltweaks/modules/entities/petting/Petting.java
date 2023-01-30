@@ -15,6 +15,7 @@ import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.HashMap;
 
+@SuppressWarnings("unused")
 public class Petting extends Module {
 
     private final String PET_DOG_PERM_KEY = "dog";

@@ -1,5 +1,6 @@
 package dev.spimy.qoltweaks.config;
 
+@SuppressWarnings("unused")
 public enum RemovableConfigPaths {
     ENABLED("enabled"),
     REQUIRE_PERMISSION("require-permission");

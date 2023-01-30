@@ -5,6 +5,7 @@ import dev.spimy.qoltweaks.config.RemovableConfigPaths;
 import dev.spimy.qoltweaks.modules.Module;
 import dev.spimy.qoltweaks.modules.RequireProtocolLib;
 
+@SuppressWarnings("unused")
 @RequireProtocolLib
 public class RestrictPing extends Module {
 

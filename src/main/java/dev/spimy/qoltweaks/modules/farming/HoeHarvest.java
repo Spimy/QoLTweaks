@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+@SuppressWarnings("unused")
 public class HoeHarvest extends Module {
 
     public HoeHarvest() {

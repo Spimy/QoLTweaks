@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+@SuppressWarnings("unused")
 public class HostnameWhitelist extends Module {
 
     private final QoLTweaks plugin = QoLTweaks.getInstance();

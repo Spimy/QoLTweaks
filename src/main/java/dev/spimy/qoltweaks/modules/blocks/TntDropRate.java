@@ -9,6 +9,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import java.util.HashMap;
 
 
+@SuppressWarnings("unused")
 public class TntDropRate extends Module {
 
     public TntDropRate() {

@@ -6,6 +6,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 
+@SuppressWarnings("unused")
 public class AntiEndermanGrief extends Module {
 
     public AntiEndermanGrief() {
