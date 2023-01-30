@@ -5,9 +5,8 @@ import dev.spimy.qoltweaks.commands.subcommands.SubCommand;
 import dev.spimy.qoltweaks.config.ConfigManager;
 import org.bukkit.command.CommandSender;
 
+@SuppressWarnings("unused")
 public class Reload extends SubCommand {
-
-    private final QoLTweaks plugin = QoLTweaks.getInstance();
 
     public Reload() {
         super("reload", "Reload the plugin's configurations.", true);
@@ -15,6 +14,8 @@ public class Reload extends SubCommand {
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
+        final QoLTweaks plugin = QoLTweaks.getInstance();
+
         plugin.reloadConfig();
         plugin.getConfigManagers().values().forEach(ConfigManager::reloadConfig);
 
