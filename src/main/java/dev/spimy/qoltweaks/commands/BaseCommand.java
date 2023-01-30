@@ -17,11 +17,11 @@ import java.util.List;
 
 public class BaseCommand implements TabExecutor {
 
-    private final QoLTweaks plugin = QoLTweaks.getInstance();
-    private final SubCommandHandler handler = SubCommandHandler.getInstance();
-
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        final QoLTweaks plugin = QoLTweaks.getInstance();
+        final SubCommandHandler handler = SubCommandHandler.getInstance();
+
         if (args.length == 0) {
             return handler.getSubCommand("help").execute(sender, args);
         }
@@ -47,6 +47,7 @@ public class BaseCommand implements TabExecutor {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        final SubCommandHandler handler = SubCommandHandler.getInstance();
         final List<String> completions = new ArrayList<>();
 
         if (args.length == 1) {
@@ -54,17 +55,12 @@ public class BaseCommand implements TabExecutor {
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("help")) {
                 StringUtil.copyPartialMatches(args[1], handler.getSubCommandNames(), completions);
-            }
-
-            else if (args[0].equalsIgnoreCase("toggle")) {
-                StringUtil.copyPartialMatches(args[1], plugin.getConfigManagers().keySet(), completions);
-            }
-
-            else {
+            } else {
                 for (int i = 0; i < handler.getSubCommandNames().size(); i++) {
                     if (args[0].equalsIgnoreCase(handler.getSubCommandNames().get(i))) {
                         SubCommand subCommand = handler.getSubCommand(handler.getSubCommandNames().get(i));
-                        StringUtil.copyPartialMatches(args[1], subCommand.getStrippedArguments(), completions);
+                        if (!subCommand.hasArguments()) continue;
+                        StringUtil.copyPartialMatches(args[1], subCommand.getArgumentInfo().arguments(), completions);
                     }
                 }
             }
