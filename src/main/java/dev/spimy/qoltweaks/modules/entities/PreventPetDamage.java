@@ -11,11 +11,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class PreventPetDamage extends Module {
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPetHit(EntityDamageByEntityEvent event) {
-        Entity damager = event.getDamager();
+    public void onPetHit(final EntityDamageByEntityEvent event) {
+        final Entity damager = event.getDamager();
         if (!(damager instanceof Player player)) return;
 
-        Entity victim = event.getEntity();
+        final Entity victim = event.getEntity();
         if (!(victim instanceof Tameable pet)) return;
 
         if (isDisabled()) return;

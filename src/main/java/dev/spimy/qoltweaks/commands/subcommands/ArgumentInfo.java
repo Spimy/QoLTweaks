@@ -5,7 +5,7 @@ import java.util.List;
 
 public record ArgumentInfo(String infoArg, String argDescription, boolean required, List<String> arguments) {
 
-    public ArgumentInfo(String infoArg, String argDescription, boolean required) {
+    public ArgumentInfo(final String infoArg, final String argDescription, final boolean required) {
         this(infoArg, argDescription, required, new ArrayList<>());
     }
 

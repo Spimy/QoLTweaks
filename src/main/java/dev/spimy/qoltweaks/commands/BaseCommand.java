@@ -18,7 +18,7 @@ import java.util.List;
 public class BaseCommand implements TabExecutor {
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    public boolean onCommand(@NotNull final CommandSender sender, @NotNull final Command command, @NotNull final String label, final String[] args) {
         final QoLTweaks plugin = QoLTweaks.getInstance();
         final SubCommandHandler handler = SubCommandHandler.getInstance();
 
@@ -27,7 +27,7 @@ public class BaseCommand implements TabExecutor {
             return true;
         }
 
-        SubCommand subCommand = handler.getSubCommand(args[0].toLowerCase());
+        final SubCommand subCommand = handler.getSubCommand(args[0].toLowerCase());
         if (subCommand == null) {
             sender.sendMessage(plugin.getMessageManager().getConfigMessage("not-exist", true));
             return true;
@@ -49,7 +49,7 @@ public class BaseCommand implements TabExecutor {
     }
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public @Nullable List<String> onTabComplete(@NotNull final CommandSender sender, @NotNull final Command command, @NotNull final String label, @NotNull final String[] args) {
         final SubCommandHandler handler = SubCommandHandler.getInstance();
         final List<String> completions = new ArrayList<>();
 
@@ -61,7 +61,7 @@ public class BaseCommand implements TabExecutor {
             } else {
                 for (int i = 0; i < handler.getSubCommandNames().size(); i++) {
                     if (args[0].equalsIgnoreCase(handler.getSubCommandNames().get(i))) {
-                        SubCommand subCommand = handler.getSubCommand(handler.getSubCommandNames().get(i));
+                        final SubCommand subCommand = handler.getSubCommand(handler.getSubCommandNames().get(i));
                         if (!subCommand.hasArguments()) continue;
                         StringUtil.copyPartialMatches(args[1], subCommand.getArgumentInfo().arguments(), completions);
                     }

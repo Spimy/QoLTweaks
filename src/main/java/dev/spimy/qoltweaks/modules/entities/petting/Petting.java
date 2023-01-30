@@ -35,37 +35,37 @@ public class Petting extends Module {
     }
 
     @EventHandler
-    public void onPetting(PlayerInteractEntityEvent event) {
+    public void onPetting(final PlayerInteractEntityEvent event) {
         if (event.getHand() != EquipmentSlot.HAND) return;
         if (isDisabled()) return;
 
-        Player player = event.getPlayer();
-        Entity entity = event.getRightClicked();
+        final Player player = event.getPlayer();
+        final Entity entity = event.getRightClicked();
 
         if (player.getInventory().getItemInMainHand().getType() != Material.AIR || !player.isSneaking()) return;
 
-        long cooldownTimer = 60;
-        Sound petSound;
+        final long cooldownTimer;
+        final Sound petSound;
 
         if (entity.getType() == EntityType.WOLF) {
             if (isMissingPermission(player, PET_DOG_PERM_KEY) || isMissingDefaultPermission(player)) return;
             if (!((Wolf) entity).isSitting()) return;
-            cooldownTimer = getConfigManager().getConfig().getLong("cooldown.dog", cooldownTimer);
+            cooldownTimer = getConfigManager().getConfig().getLong("cooldown.dog");
             petSound = Sound.ENTITY_WOLF_WHINE;
         } else if (entity.getType() == EntityType.CAT) {
             if (isMissingPermission(player, PET_CAT_PERM_KEY) || isMissingDefaultPermission(player)) return;
             if (!((Cat) entity).isSitting()) return;
-            cooldownTimer = getConfigManager().getConfig().getLong("cooldown.cat", cooldownTimer);
+            cooldownTimer = getConfigManager().getConfig().getLong("cooldown.cat");
             petSound = Sound.ENTITY_CAT_PURREOW;
         } else return;
 
         final QoLTweaks plugin = QoLTweaks.getInstance();
-        Tameable pet = (Tameable) entity;
-        PettingTimer pettingTimer = new PettingTimer(plugin, pet);
+        final Tameable pet = (Tameable) entity;
+        final PettingTimer pettingTimer = new PettingTimer(plugin, pet);
 
         if (!pettingTimer.canPet(cooldownTimer)) return;
 
-        Location location = pet.getLocation();
+        final Location location = pet.getLocation();
 
         player.getWorld().spawnParticle(Particle.HEART, location.add(0, 0.5, 0), 1, 0, 0, 0, 0.1);
         player.getWorld().playSound(location, petSound, 1F, 0.5F + (float) Math.random() * 0.5F);
@@ -81,7 +81,7 @@ public class Petting extends Module {
             }
 
             if (pet.getHealth() < petMaxHealth.getValue()) {
-                double health = pet.getHealth() + Math.random();
+                final double health = pet.getHealth() + Math.random();
                 if (health < 20) {
                     pet.setHealth(health);
                 }
@@ -89,7 +89,7 @@ public class Petting extends Module {
         }
 
         if (getConfigManager().getConfig().getBoolean("deaggro")) {
-            Entity target = pet.getTarget();
+            final Entity target = pet.getTarget();
             if (target != null) {
                 if (target.getType() == EntityType.PLAYER) {
                     pet.setTarget(null);

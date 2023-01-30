@@ -5,6 +5,7 @@ import dev.spimy.qoltweaks.commands.subcommands.ArgumentInfo;
 import dev.spimy.qoltweaks.commands.subcommands.SubCommand;
 import dev.spimy.qoltweaks.config.ConfigManager;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
 public class Toggle extends SubCommand {
@@ -23,7 +24,7 @@ public class Toggle extends SubCommand {
         );
     }
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(@NotNull final CommandSender sender, final String[] args) {
         final QoLTweaks plugin = QoLTweaks.getInstance();
 
         if (args.length == 0) {

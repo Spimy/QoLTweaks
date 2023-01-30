@@ -14,7 +14,7 @@ public class SubCommandHandler {
     private SubCommandHandler() {
         String packageName = getClass().getPackageName();
 
-        for (Class<? extends SubCommand> subCommand : new Reflections(packageName).getSubTypesOf(SubCommand.class)) {
+        for (final Class<? extends SubCommand> subCommand : new Reflections(packageName).getSubTypesOf(SubCommand.class)) {
             try {
                 subCommands.add(subCommand.getDeclaredConstructor().newInstance());
             } catch (InstantiationException | NoSuchMethodException | InvocationTargetException |
@@ -32,7 +32,7 @@ public class SubCommandHandler {
         return SubCommandHandlerHolder.subCommandHandler;
     }
 
-    public SubCommand getSubCommand(String command) {
+    public SubCommand getSubCommand(final String command) {
         return subCommands.stream().filter(subCommand -> subCommand.getName().equalsIgnoreCase(command)).findFirst().orElse(null);
     }
 

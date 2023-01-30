@@ -11,7 +11,6 @@ import java.util.HashMap;
 public final class QoLTweaks extends JavaPlugin {
 
     private static QoLTweaks plugin;
-
     private MessageManager messageManager;
     private final HashMap<String, ConfigManager> configManagers = new HashMap<>();
 
@@ -29,7 +28,7 @@ public final class QoLTweaks extends JavaPlugin {
 
         getLogger().info("QoLTweaks enabled.");
 
-        UpdateChecker updateChecker = new UpdateChecker(107387);
+        final UpdateChecker updateChecker = new UpdateChecker(107387);
         updateChecker.check(version -> {
            if (!updateChecker.getCurrentVersion().equalsIgnoreCase(version)) {
                getLogger().warning("A new version v" + version + " is available.");
@@ -54,7 +53,7 @@ public final class QoLTweaks extends JavaPlugin {
         return plugin;
     }
 
-    public NamespacedKey getKey(String key) {
+    public NamespacedKey getKey(final String key) {
         return new NamespacedKey(this, key);
     }
 
@@ -62,7 +61,7 @@ public final class QoLTweaks extends JavaPlugin {
         return getServer().getPluginManager().getPlugin("ProtocolLib") != null;
     }
 
-    public String getModuleName(String name) {
+    public String getModuleName(final String name) {
         return name.replaceAll("([a-z])([A-Z]+)", "$1-$2").toLowerCase();
     }
 

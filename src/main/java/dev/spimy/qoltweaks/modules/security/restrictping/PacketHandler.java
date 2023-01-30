@@ -15,20 +15,20 @@ public class PacketHandler extends PacketAdapter {
 
     private final ConfigManager configManager;
 
-    public PacketHandler(ConfigManager configManager) {
+    public PacketHandler(final ConfigManager configManager) {
         super(QoLTweaks.getInstance(), ListenerPriority.HIGHEST, PacketType.Handshake.Client.SET_PROTOCOL);
         this.configManager = configManager;
     }
 
     @Override
-    public void onPacketReceiving(PacketEvent event) {
+    public void onPacketReceiving(final PacketEvent event) {
         if (!configManager.getConfig().getBoolean("enabled")) return;
 
-        PacketContainer packet = event.getPacket();
+        final PacketContainer packet = event.getPacket();
         if (packet.getProtocols().read(0) != PacketType.Protocol.STATUS) return;
 
-        String hostname = packet.getStrings().read(0);
-        Set<String> whitelistedHostnames = new HashSet<>(plugin.getConfig().getStringList("allowed-hostnames"));
+        final String hostname = packet.getStrings().read(0);
+        final Set<String> whitelistedHostnames = new HashSet<>(plugin.getConfig().getStringList("allowed-hostnames"));
 
         if (whitelistedHostnames.contains(hostname.toLowerCase())) return;
         event.setCancelled(true);

@@ -27,11 +27,11 @@ public class HostnameWhitelist extends Module {
 
     @EventHandler
     @SuppressWarnings("ConstantConditions")
-    public void onLogin(PlayerLoginEvent event) {
+    public void onLogin(final PlayerLoginEvent event) {
         if (isDisabled()) return;
 
         String hostName = event.getHostname();
-        int port = hostName.indexOf(":");
+        final int port = hostName.indexOf(":");
         if (port != -1) {
             hostName = hostName.substring(0, port);
         }
@@ -41,7 +41,7 @@ public class HostnameWhitelist extends Module {
         }
 
         final QoLTweaks plugin = QoLTweaks.getInstance();
-        Set<String> whitelistedHostnames = new HashSet<>(plugin.getConfig().getStringList("allowed-hostnames"));
+        final Set<String> whitelistedHostnames = new HashSet<>(plugin.getConfig().getStringList("allowed-hostnames"));
         if (whitelistedHostnames.contains(hostName)) return;
 
         event.disallow(

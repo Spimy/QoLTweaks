@@ -10,12 +10,12 @@ public class ModuleLoader {
     private final QoLTweaks plugin = QoLTweaks.getInstance();
 
     public ModuleLoader() {
-        String packageName = getClass().getPackageName();
+        final String packageName = getClass().getPackageName();
 
-        for (Class<?> module : new Reflections(packageName).getSubTypesOf(Module.class)) {
-            RequireProtocolLib annotation = module.getAnnotation(RequireProtocolLib.class);
+        for (final Class<?> module : new Reflections(packageName).getSubTypesOf(Module.class)) {
+            final RequireProtocolLib annotation = module.getAnnotation(RequireProtocolLib.class);
             if (annotation != null && !plugin.hasProtocolLib()) {
-                String moduleName = plugin.getModuleName(module.getSimpleName());
+                final String moduleName = plugin.getModuleName(module.getSimpleName());
                 plugin.getLogger().warning(
                     moduleName + " module could not be loaded as it requires ProtocolLib."
                 );
@@ -31,7 +31,7 @@ public class ModuleLoader {
         }
     }
 
-    private void registerEvent(Module module) {
+    private void registerEvent(final Module module) {
         plugin.getServer().getPluginManager().registerEvents(module, plugin);
     }
 

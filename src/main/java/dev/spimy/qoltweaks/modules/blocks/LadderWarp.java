@@ -15,10 +15,10 @@ import org.bukkit.util.Vector;
 public class LadderWarp extends Module {
 
     @EventHandler
-    public void onLadderClick(PlayerInteractEvent event) {
+    public void onLadderClick(final PlayerInteractEvent event) {
         if (isDisabled()) return;
 
-        Player player = event.getPlayer();
+        final Player player = event.getPlayer();
 
         if (event.getItem() != null) return;
         if (!player.isSneaking()) return;
@@ -28,11 +28,11 @@ public class LadderWarp extends Module {
 
         if (isMissingDefaultPermission(player)) return;
 
-        Block ladder = event.getClickedBlock();
-        Vector face = player.getEyeLocation().getDirection().clone();
+        final Block ladder = event.getClickedBlock();
+        final Vector face = player.getEyeLocation().getDirection().clone();
 
         if (ladder.getRelative(BlockFace.DOWN).getType() != Material.LADDER) {
-            Block topBlock = getFirstNonLadderBlock(ladder, BlockFace.UP);
+            final Block topBlock = getFirstNonLadderBlock(ladder, BlockFace.UP);
             if (topBlock != null) {
                 if (topBlock.getRelative(BlockFace.UP).getType() == Material.AIR) {
                     player.teleport(topBlock.getLocation().setDirection(face).subtract(-0.5, 1, -0.5));
@@ -40,7 +40,7 @@ public class LadderWarp extends Module {
                 }
             }
         } else if (ladder.getRelative(BlockFace.UP).getType() != Material.LADDER) {
-            Block downBlock = getFirstNonLadderBlock(ladder, BlockFace.DOWN);
+            final Block downBlock = getFirstNonLadderBlock(ladder, BlockFace.DOWN);
             if (downBlock != null) {
                 player.teleport(downBlock.getLocation().setDirection(face).add(0.5, 1, 0.5));
                 player.playSound(player.getLocation(), Sound.BLOCK_LADDER_STEP, 1, 1);
@@ -48,8 +48,8 @@ public class LadderWarp extends Module {
         }
     }
 
-    private Block getFirstNonLadderBlock(Block block, BlockFace direction) {
-        Block upBlock = block.getRelative(direction);
+    private Block getFirstNonLadderBlock(final Block block, final BlockFace direction) {
+        final Block upBlock = block.getRelative(direction);
         if (upBlock.getType() == Material.LADDER) {
             return getFirstNonLadderBlock(upBlock, direction);
         } else if (upBlock.getType() == Material.AIR) {

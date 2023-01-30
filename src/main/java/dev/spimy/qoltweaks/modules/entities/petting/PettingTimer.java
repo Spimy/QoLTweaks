@@ -12,7 +12,7 @@ public class PettingTimer {
     private final PersistentDataContainer data;
     private final NamespacedKey key;
 
-    public PettingTimer(QoLTweaks plugin, Tameable tameable) {
+    public PettingTimer(final QoLTweaks plugin, final Tameable tameable) {
         this.tameable = tameable;
         this.data = tameable.getPersistentDataContainer();
         this.key = plugin.getKey("petting-timer");
@@ -33,7 +33,7 @@ public class PettingTimer {
 
     public long timeSinceLastPet() {
         if (!tameable.isTamed()) return 0;
-        long lastPetAt = getPetTime();
+        final long lastPetAt = getPetTime();
         return tameable.getWorld().getGameTime() - lastPetAt;
     }
 
