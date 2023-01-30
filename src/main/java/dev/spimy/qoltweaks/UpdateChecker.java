@@ -10,7 +10,6 @@ import java.util.function.Consumer;
 
 public class UpdateChecker {
 
-    private final QoLTweaks plugin = QoLTweaks.getInstance();
     private final String spigotApi;
 
     public UpdateChecker(final int pluginId) {
@@ -18,10 +17,12 @@ public class UpdateChecker {
     }
 
     public String getCurrentVersion() {
+        final QoLTweaks plugin = QoLTweaks.getInstance();
         return plugin.getDescription().getVersion();
     }
 
     public void check(final Consumer<String> consumer) {
+        final QoLTweaks plugin = QoLTweaks.getInstance();
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             try {
                 final InputStream inputStream = new URL(spigotApi).openStream();
