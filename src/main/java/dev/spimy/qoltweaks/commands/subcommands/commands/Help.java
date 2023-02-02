@@ -64,13 +64,13 @@ public class Help extends SubCommand {
         );
     }
 
-    private ArrayList<String> getCommandList(String commandName, SubCommandHandler handler) {
-        ArrayList<String> commandList = new ArrayList<>();
+    private ArrayList<String> getCommandList(final String commandName, final SubCommandHandler handler) {
+        final ArrayList<String> commandList = new ArrayList<>();
         handler.getSubCommands().forEach(subCommand -> commandList.add(formatHelpInfo(commandName, subCommand, false)));
         return commandList;
     }
 
-    private String formatHelpInfo(String commandName, SubCommand subCommand, boolean detailed) {
+    private String formatHelpInfo(final String commandName, final SubCommand subCommand, final boolean detailed) {
         if (subCommand.hasArguments()) {
             final String helpInfo = String.format(
                 "&6/%s %s %s: &a%s",
